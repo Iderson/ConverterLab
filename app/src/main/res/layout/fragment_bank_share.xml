@@ -8,8 +8,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/action_bank_info"/>
-    <TextView android:id="@+id/tvAddress_FS"
-              android:layout_width="wrap_content" android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/btnShare_FS"
         android:text="@string/action_share"

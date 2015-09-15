@@ -25,12 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initUI();
-        mBankList.add(new BankModel(
-                "Text1",
-                "Text2",
-                "Text3",
-                "Text4",
-                "Text5"));
         populateRV(mBankList);
 
     }

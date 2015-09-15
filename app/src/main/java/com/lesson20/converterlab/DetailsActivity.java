@@ -46,9 +46,7 @@ public class DetailsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         mToolbar.inflateMenu(R.menu.menu_main);
         MenuItem shareItem = menu.findItem(R.id.action_share);
-//        mShareActionProvider = (ShareActionProvider)
-//                MenuItemCompat.getActionProvider(shareItem);
-//        mShareActionProvider.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME);
+
         return true;
     }
 
