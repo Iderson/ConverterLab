@@ -1,0 +1,45 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
+    <style name="main_title">
+        <item name="android:textSize">45sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="medium_title">
+        <item name="android:textSize">31sp</item>
+    </style>
+
+    <style name="small_title_right">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:textSize">21sp</item>
+    </style>
+
+    <style name="button_menu" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:width">30dp</item>
+    </style>
+
+    <style name="button_share" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@color/primary</item>
+        <item name="android:textColor">@color/title_color</item>
+    </style>
+
+    <style name="FabStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/fab_compat_margin</item>
+        <item name="android:src">@drawable/ic_menu</item>
+        <item name="borderWidth">0dp</item>
+        <item name="elevation">6dp</item>
+        <item name="pressedTranslationZ">12dp</item>
+        <item name="rippleColor">@android:color/white</item>
+    </style>
+    <dimen name="fab_compat_margin">16dp</dimen>
+</resources>
