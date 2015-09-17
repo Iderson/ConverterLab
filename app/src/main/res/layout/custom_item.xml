@@ -3,23 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="8dp">
 
     <android.support.v7.widget.CardView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cvNotificationInfo_AC">
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
                 android:id="@+id/rlTextInfo_CI"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="8dp">
 
                 <TextView
                     android:id="@+id/tvName_CI"
@@ -30,59 +31,65 @@
                     android:id="@+id/tvRegion_CI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/tvName_CI"
                     style = "@style/medium_title" />
                 <TextView
                     android:id="@+id/tvCity_CI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/tvRegion_CI"
                     style = "@style/medium_title" />
                 <TextView
                     android:id="@+id/tvPhone_CI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/tvCity_CI"
                     style = "@style/small_title_right"/>
                 <TextView
                     android:id="@+id/tvAddress_CI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/tvPhone_CI"
                     style = "@style/small_title_right" />
-            </LinearLayout>
+            </RelativeLayout>
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/light_primary">
                 <ImageButton
                     android:id="@+id/btnLink_CI"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="60dp"
-                    android:padding="20dp"
+                    android:layout_height="fill_parent"
+                    android:paddingLeft="20dp"
                     android:src="@drawable/ic_link"
                     style = "@style/button_menu" />
                 <ImageButton
                     android:id="@+id/btnLocation_CI"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_height="60dp"
                     android:src="@drawable/ic_map"
-                    android:padding="20dp"
+                    android:paddingTop = "20dp"
+                    android:paddingBottom = "20dp"
                     style = "@style/button_menu" />
                 <ImageButton
                     android:id="@+id/btnCall_CI"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_height="60dp"
                     android:src="@drawable/ic_phone"
-                    android:padding="20dp"
+                    android:paddingTop = "20dp"
+                    android:paddingBottom = "20dp"
                     style = "@style/button_menu" />
                 <ImageButton
                     android:id="@+id/btnDetails_CI"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="60dp"
+                    android:layout_height="fill_parent"
                     android:src="@drawable/ic_next"
-                    android:padding="20dp"
+                    android:paddingRight="20dp"
                     style = "@style/button_menu" />
             </LinearLayout>
         </LinearLayout>

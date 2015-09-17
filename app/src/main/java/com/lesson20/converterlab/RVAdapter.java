@@ -14,15 +14,18 @@ import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ContactViewHolder> implements View.OnClickListener {
 
-    private List<BankModel> mBankModels;
+    private LayoutInflater mLf;
+    private List<OrganizationModel> mOrgList;
     private Activity         mActivity;
     private int lastPosition = -1;
 
 
-    RVAdapter(Activity activity, List<BankModel> _notifications){
-        this.mBankModels = _notifications;
+    RVAdapter(Activity activity, List<OrganizationModel> _orgList){
+        mOrgList = _orgList;
         this.mActivity = activity;
+        this.mLf        = LayoutInflater.from(mActivity);
     }
+
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -31,32 +34,38 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ContactViewHolder>
                         viewGroup,
                         false);
 
+//        LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View v = inflater.inflate(R.layout.custom_item, viewGroup, false);
         return new ContactViewHolder(v);
     }
 
+
+
     @Override
     public void onBindViewHolder(final ContactViewHolder personViewHolder, int i) {
-        String mName = mBankModels.get(i).getName();
-        String mCity = mBankModels.get(i).getCity();
-        String mRegion = mBankModels.get(i).getRegion();
-        String mPhoneMain = mBankModels.get(i).getPhoneMain();
-        String mAddress = mBankModels.get(i).getAddress();
 
-        personViewHolder.mHolderName         .setText(mName);
-        personViewHolder.mHolderCity         .setText(mCity);
-        personViewHolder.mHolderRegion       .setText(mRegion);
-        personViewHolder.mHolderPhoneMain    .setText(mPhoneMain);
-        personViewHolder.mHolderAddress      .setText(mAddress);
+        String title = mOrgList.get(i).getTitle();
+        String city = mOrgList.get(i).getCity();
+        String region = mOrgList.get(i).getRegion();
+        String phone = mOrgList.get(i).getPhone();
+        String address = mOrgList.get(i).getAddress();
+
+        personViewHolder.mHolderName         .setText(title);
+        personViewHolder.mHolderCity         .setText(city);
+        personViewHolder.mHolderRegion       .setText(region);
+        personViewHolder.mHolderPhoneMain    .setText(phone);
+        personViewHolder.mHolderAddress      .setText(address);
 
         personViewHolder.btnDetails.setOnClickListener(this);
         personViewHolder.btnLink.setOnClickListener(this);
         personViewHolder.btnLocation.setOnClickListener(this);
         personViewHolder.btnCall.setOnClickListener(this);
+
     }
 
     @Override
     public int getItemCount() {
-        return mBankModels.size();
+        return mOrgList.size();
     }
 
     @Override
@@ -108,6 +117,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ContactViewHolder>
             btnLocation = (ImageButton) itemView.findViewById(R.id.btnLocation_CI);
             btnCall     = (ImageButton) itemView.findViewById(R.id.btnCall_CI);
             btnDetails  = (ImageButton) itemView.findViewById(R.id.btnDetails_CI);
+
+//            mView = (OrganizationView) itemView;
+//            mView = new OrganizationView(itemView.getContext());
 
 
         }

@@ -9,13 +9,14 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CallbackLoading {
 
-    private ArrayList<BankModel> mBankList;
+    private List<OrganizationModel> mBankList;
     private RecyclerView mRvBanks;
     private Toolbar mToolbar;
 
@@ -25,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initUI();
-        populateRV(mBankList);
-
     }
 
     private void initUI() {
@@ -37,25 +36,23 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(MainActivity.this);
         mRvBanks = (RecyclerView) findViewById(R.id.rvBanks_AM);
         mRvBanks.setLayoutManager(llm);
+//        new AsyncCurrencyLoader(this, MainActivity.this).execute();
 
+        testRV();
 //        getSupportLoaderManager().initLoader(0, null, this);
-//        mRvBanks.addOnItemTouchListener(new RecyclerClickListener(
-//                MainActivity.this,
-//                mRvBanks,
-//                new RecyclerClickListener.OnItemLongClickListener() {
-//                    @Override
-//                    public void onItemLongClick(View view, int position) {
-//                    }
-//
-//                    @Override
-//                    public void onItemClick(View view, int position) {
-////                        showNotification(mBankList.get(position));
-//                    }
-//                }));
     }
 
-    private void populateRV(List<BankModel> _bankModelList) {
-        RVAdapter adapter = new RVAdapter(MainActivity.this, _bankModelList);
+    private void testRV() {
+        for(int i = 0; i < 10; i++){
+            mBankList.add(new OrganizationModel("id",
+                    "Alfa Bank",
+                    "Transcarpathian",
+                    "Ungvar",
+                    "Pushkinskaya, 10",
+                    "911-66666",
+                    "tttp://alfabank.com"));
+        }
+        RVAdapter adapter = new RVAdapter(MainActivity.this, mBankList);
         mRvBanks.setAdapter(adapter);
     }
 
@@ -87,5 +84,18 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onSuccess(List<OrganizationModel> _organizationModelList) {
+        RVAdapter adapter = new RVAdapter(MainActivity.this, _organizationModelList);
+        mRvBanks.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void onFailure(String errorMessage) {
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
 
 }

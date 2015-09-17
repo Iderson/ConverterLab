@@ -67,9 +67,9 @@ public class DetailsActivity extends AppCompatActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_share:
-                ShareDialog dialog = new ShareDialog();
-                dialog.setBankInfo( new BankModel("text","text","text","text","text"));
-                dialog.show(getFragmentManager(), "Edit Contact");
+//                ShareDialog dialog = new ShareDialog();
+//                dialog.setBankInfo( new BankModel("text","text","text","text","text"));
+//                dialog.show(getFragmentManager(), "Edit Contact");
 //
 //                mShareActionProvider.setShareIntent(getDefaultIntent());
                 return true;
