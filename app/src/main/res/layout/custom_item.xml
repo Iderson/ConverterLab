@@ -61,36 +61,30 @@
                     android:id="@+id/btnLink_CI"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="fill_parent"
-                    android:paddingLeft="20dp"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/ic_link"
-                    style = "@style/button_menu" />
+                    style = "@style/button_action" />
                 <ImageButton
                     android:id="@+id/btnLocation_CI"
                     android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:layout_height="fill_parent"
                     android:src="@drawable/ic_map"
-                    android:paddingTop = "20dp"
-                    android:paddingBottom = "20dp"
-                    style = "@style/button_menu" />
+                    style = "@style/button_action" />
                 <ImageButton
                     android:id="@+id/btnCall_CI"
                     android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:layout_height="fill_parent"
                     android:src="@drawable/ic_phone"
-                    android:paddingTop = "20dp"
-                    android:paddingBottom = "20dp"
-                    style = "@style/button_menu" />
+                    style = "@style/button_action" />
                 <ImageButton
                     android:id="@+id/btnDetails_CI"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="fill_parent"
                     android:src="@drawable/ic_next"
-                    android:paddingRight="20dp"
-                    style = "@style/button_menu" />
+                    style = "@style/button_action" />
             </LinearLayout>
         </LinearLayout>
 

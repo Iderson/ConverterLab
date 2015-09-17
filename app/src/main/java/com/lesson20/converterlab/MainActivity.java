@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity implements CallbackLoading {
         LinearLayoutManager llm = new LinearLayoutManager(MainActivity.this);
         mRvBanks = (RecyclerView) findViewById(R.id.rvBanks_AM);
         mRvBanks.setLayoutManager(llm);
-//        new AsyncCurrencyLoader(this, MainActivity.this).execute();
+        new AsyncCurrencyLoader(this, MainActivity.this).execute();
 
-        testRV();
+//        testRV();
 //        getSupportLoaderManager().initLoader(0, null, this);
     }
 
