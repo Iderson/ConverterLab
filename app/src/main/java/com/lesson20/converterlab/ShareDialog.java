@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.File;
@@ -27,7 +26,7 @@ public class ShareDialog extends DialogFragment implements View.OnClickListener 
     private View rootView;
     private BankModel mBankInfo;
     private ImageView mIvBitmapInfo;
-    private LinearLayout view;
+//    private LinearLayout view;
     private ShareActionProvider mShareActionProvider;
 
     @Nullable
@@ -39,12 +38,12 @@ public class ShareDialog extends DialogFragment implements View.OnClickListener 
 //todo: Create layout for Bank info and populate it
         rootView = inflater.inflate(R.layout.fragment_bank_share, null);
         View rootView2 = inflater.inflate(R.layout.activity_details, null);
-        view = (LinearLayout)rootView2.findViewById(R.id.llInfo);
+//        view = (LinearLayout)rootView2.findViewById(R.id.llInfo);
         mIvBitmapInfo = (ImageView) rootView.findViewById(R.id.ivBitmapInfo_FS);
         Button mShare = (Button) rootView.findViewById(R.id.btnShare_FS);
 
-        if(mBankInfo != null && view != null)
-            loadImage();
+//        if(mBankInfo != null && view != null)
+//            loadImage();
 
         mShare.setOnClickListener(this);
         return rootView;
@@ -52,8 +51,8 @@ public class ShareDialog extends DialogFragment implements View.OnClickListener 
     }
 
     private void loadImage() {
-        Bitmap bitmap = viewToBitmap(view);
-        mIvBitmapInfo.setImageBitmap(bitmap);
+//        Bitmap bitmap = viewToBitmap(view);
+//        mIvBitmapInfo.setImageBitmap(bitmap);
     }
 
 

@@ -15,12 +15,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <RelativeLayout
-                android:id="@+id/rlTextInfo_CI"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
 
                 <TextView
                     android:id="@+id/tvName_CI"
@@ -51,7 +45,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvPhone_CI"
                     style = "@style/small_title_right" />
-            </RelativeLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
