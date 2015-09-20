@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="key_details" type="id">detail tag</item>
+    <item name="key_link" type="id">key link for external browser</item>
+    <item name="key_location" type="id">key to open in google maps</item>
+    <item name="key_call" type="id">key to call in external dialer</item>
+</resources>

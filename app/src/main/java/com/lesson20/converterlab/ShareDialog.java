@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.lesson20.converterlab.models.BankModel;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

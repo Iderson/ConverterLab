@@ -36,26 +36,25 @@
                     android:id="@+id/tvBankName_AD"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Альфа Банк"
                     style = "@style/main_title"
                     android:textColor="@color/title_color" />
+                <TextView
+                    android:id="@+id/tvRegion_AD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style = "@style/medium_title"  />
+                <TextView
+                    android:id="@+id/tvCity_AD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style = "@style/medium_title"  />
                 <TextView
                     android:id="@+id/tvWebsiteName_AD"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style = "@style/medium_title" />
                 <TextView
-                    android:id="@+id/tvInternetBankingName_AD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style = "@style/medium_title"  />
-                <TextView
                     android:id="@+id/tvAddressName_AD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style = "@style/medium_title"  />
-                <TextView
-                    android:id="@+id/tvHotlineName_AD"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style = "@style/medium_title"  />
@@ -64,11 +63,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style = "@style/medium_title" />
-                <TextView
-                    android:id="@+id/tvEmailName_AD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style = "@style/medium_title"  />
             </LinearLayout>
             </android.support.v7.widget.CardView>
 

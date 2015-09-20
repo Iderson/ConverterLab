@@ -1,4 +1,4 @@
-package com.lesson20.converterlab;
+package com.lesson20.converterlab.models;
 
 
 import java.util.ArrayList;

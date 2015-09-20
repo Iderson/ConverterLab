@@ -31,9 +31,9 @@
                 android:value="com.lesson20.converterlab.MainActivity" />
         </activity>
 
-        <service android:name="com.lesson20.converterlab.LoadService" />
+        <service android:name=".service.LoadService" />
 
-        <receiver android:name=".ServiceBroadcast">
+        <receiver android:name=".service.ServiceBroadcast">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.HOME" />
@@ -41,7 +41,7 @@
         </receiver>
 
         <provider
-            android:name="ConverterContentProvider"
+            android:name=".database.ConverterContentProvider"
             android:authorities="com.lesson20.converterlab.organiations"
             android:exported="false" />
     </application>

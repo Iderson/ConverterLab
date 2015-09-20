@@ -21,6 +21,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.lesson20.converterlab.database.ConverterContentProvider;
+import com.lesson20.converterlab.database.ConverterDBHelper;
+import com.lesson20.converterlab.models.OrganizationModel;
+import com.lesson20.converterlab.service.LoadService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +38,29 @@ public class MainActivity extends AppCompatActivity
 
     private boolean mIsBound = false;
     private LoadService mBoundService;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        doBindService();
+        initUI();
+    }
+
+    private void initUI() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
+        LinearLayoutManager llm = new LinearLayoutManager(MainActivity.this);
+        mRvBanks = (RecyclerView) findViewById(R.id.rvBanks_AM);
+        mRvBanks.setLayoutManager(llm);
+
+
+//        testRV();
+        getSupportLoaderManager().initLoader(0, null, this);
+    }
 
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -62,29 +90,6 @@ public class MainActivity extends AppCompatActivity
             unbindService(mConnection);
             mIsBound = false;
         }
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        doBindService();
-        initUI();
-    }
-
-    private void initUI() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-
-        LinearLayoutManager llm = new LinearLayoutManager(MainActivity.this);
-        mRvBanks = (RecyclerView) findViewById(R.id.rvBanks_AM);
-        mRvBanks.setLayoutManager(llm);
-
-
-//        testRV();
-        getSupportLoaderManager().initLoader(0, null, this);
     }
 
 

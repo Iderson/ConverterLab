@@ -1,4 +1,4 @@
-package com.lesson20.converterlab;
+package com.lesson20.converterlab.service;
 
 import android.annotation.TargetApi;
 import android.app.NotificationManager;
@@ -14,6 +14,14 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.lesson20.converterlab.MainActivity;
+import com.lesson20.converterlab.R;
+import com.lesson20.converterlab.database.ConverterContentProvider;
+import com.lesson20.converterlab.database.ConverterDBHelper;
+import com.lesson20.converterlab.json.AsyncCurrencyLoader;
+import com.lesson20.converterlab.json.CallbackLoading;
+import com.lesson20.converterlab.models.OrganizationModel;
 
 import java.util.List;
 import java.util.Timer;
@@ -34,13 +42,13 @@ public class LoadService extends Service implements CallbackLoading {
         ContentValues[]contentValues = new ContentValues[_organizationModelList.size()];
         for (int i = 0; i < _organizationModelList.size(); i++) {
             contentValues[i] = new ContentValues();
-            contentValues[i].put(ConverterDBHelper.FIELD_ROW_ID, _organizationModelList.get(i).id);
-            contentValues[i].put(ConverterDBHelper.FIELD_TITLE, _organizationModelList.get(i).title);
-            contentValues[i].put(ConverterDBHelper.FIELD_REGION, _organizationModelList.get(i).region);
-            contentValues[i].put(ConverterDBHelper.FIELD_CITY, _organizationModelList.get(i).city);
-            contentValues[i].put(ConverterDBHelper.FIELD_PHONE, _organizationModelList.get(i).phone);
-            contentValues[i].put(ConverterDBHelper.FIELD_ADDRESS, _organizationModelList.get(i).address);
-            contentValues[i].put(ConverterDBHelper.FIELD_LINK, _organizationModelList.get(i).link);
+            contentValues[i].put(ConverterDBHelper.FIELD_ROW_ID, _organizationModelList.get(i).getId());
+            contentValues[i].put(ConverterDBHelper.FIELD_TITLE, _organizationModelList.get(i).getTitle());
+            contentValues[i].put(ConverterDBHelper.FIELD_REGION, _organizationModelList.get(i).getRegion());
+            contentValues[i].put(ConverterDBHelper.FIELD_CITY, _organizationModelList.get(i).getCity());
+            contentValues[i].put(ConverterDBHelper.FIELD_PHONE, _organizationModelList.get(i).getPhone());
+            contentValues[i].put(ConverterDBHelper.FIELD_ADDRESS, _organizationModelList.get(i).getAddress());
+            contentValues[i].put(ConverterDBHelper.FIELD_LINK, _organizationModelList.get(i).getLink());
         }
 
         InsertTask insertTask = new InsertTask();
@@ -50,8 +58,8 @@ public class LoadService extends Service implements CallbackLoading {
     private class InsertTask extends AsyncTask<ContentValues, Void, Void> {
         @Override
         protected Void doInBackground(ContentValues... contentValues) {
-            for (int i = 0; i < contentValues.length; i++) {
-                getContentResolver().insert(ConverterContentProvider.CONTENT_URI, contentValues[i]);
+            for (ContentValues contentValue : contentValues) {
+                getContentResolver().insert(ConverterContentProvider.CONTENT_URI, contentValue);
             }
 
             return null;
@@ -64,7 +72,7 @@ public class LoadService extends Service implements CallbackLoading {
     }
 
     public class LocalBinder extends Binder {
-        LoadService getService() {
+        public LoadService getService() {
             return LoadService.this;
         }
     }

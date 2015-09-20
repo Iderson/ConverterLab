@@ -1,4 +1,4 @@
-package com.lesson20.converterlab;
+package com.lesson20.converterlab.service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
