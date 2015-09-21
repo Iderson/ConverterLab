@@ -46,7 +46,7 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:background="@color/light_primary">
                 <ImageButton
                     android:id="@+id/btnLink_OI"
@@ -73,7 +73,7 @@
                     android:id="@+id/btnDetails_OI"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/ic_next"
                     style = "@style/button_action" />
             </LinearLayout>
