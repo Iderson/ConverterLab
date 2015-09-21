@@ -1,17 +1,13 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              tools:context=".MainActivity"
-              android:orientation="vertical">
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    xmlns:fab="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    tools:context=".MainActivity">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_AD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/dark_primary"
@@ -20,106 +16,173 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:paddingBottom="@dimen/activity_vertical_margin"/>
 
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="4dp"
-            android:layout_margin="4dp" >
-            <LinearLayout
-                android:id="@+id/llInfo_AD"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvBankName_AD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style = "@style/main_title"
-                    android:textColor="@color/title_color" />
-                <TextView
-                    android:id="@+id/tvLink_AD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style = "@style/small_title"
-                    android:clickable="true"/>
-                <TextView
-                    android:id="@+id/tvRegion_AD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style = "@style/small_title"  />
-                <TextView
-                    android:id="@+id/tvCity_AD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style = "@style/small_title"  />
-                <TextView
-                    android:id="@+id/tvAddressName_AD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style = "@style/small_title"  />
-                <TextView
-                    android:id="@+id/tvPhoneName_AD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style = "@style/small_title" />
-            </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/cvCurrencyHeader_AD"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="4dp"
-                android:layout_margin="4dp">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/tvHeaderName_AD"
-                        android:layout_width="wrap_content"
+        <LinearLayout android:id="@+id/llMain_AD"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_below="@+id/toolbar_AD">
+            <ScrollView android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/header_name"
-                        style = "@style/medium_title"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true" />
-                    <TextView
-                        android:id="@+id/tvHeaderValue_AD"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/header_value"
-                        style = "@style/small_title_right"/>
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="4dp"
-                android:layout_margin="4dp">
+                        android:orientation="vertical">
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rvCurrencies_AD"
+                    android:orientation="vertical">
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardView_AD"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp"
+                    android:layout_margin="4dp" >
+                    <LinearLayout
+                        android:id="@+id/llInfo_AD"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_gravity="right|bottom"
-        style="@style/FabStyle"/>
-    </LinearLayout>
-</ScrollView>
+                        <TextView
+                            android:id="@+id/tvBankName_AD"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style = "@style/main_title"
+                            android:textColor="@color/title_color" />
+                        <TextView
+                            android:id="@+id/tvLink_AD"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style = "@style/small_title"
+                            android:clickable="true"/>
+                        <TextView
+                            android:id="@+id/tvRegion_AD"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style = "@style/small_title"  />
+                        <TextView
+                            android:id="@+id/tvCity_AD"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style = "@style/small_title"  />
+                        <TextView
+                            android:id="@+id/tvAddressName_AD"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style = "@style/small_title"  />
+                        <TextView
+                            android:id="@+id/tvPhoneName_AD"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style = "@style/small_title" />
+                    </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cvCurrencyHeader_AD"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="4dp"
+                        android:layout_margin="4dp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+                            <TextView
+                                android:id="@+id/tvHeaderName_AD"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/header_name"
+                                style = "@style/medium_title"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true" />
+                            <TextView
+                                android:id="@+id/tvHeaderValue_AD"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/header_value"
+                                style = "@style/small_title_right"/>
+                        </RelativeLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="4dp"
+                        android:layout_margin="4dp">
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp">
+
+                            <android.support.v4.widget.SwipeRefreshLayout
+                                android:id="@+id/swpRefreshLayout_AD"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <android.support.v7.widget.RecyclerView
+                                    android:id="@+id/rvCurrencies_AD"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    />
+                            </android.support.v4.widget.SwipeRefreshLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/famMenu_AD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llMain_AD"
+            fab:fab_icon="@drawable/ic_menu"
+            fab:fab_addButtonColorNormal="@color/pink"
+            fab:fab_addButtonColorPressed="@color/pink_pressed"
+            fab:fab_addButtonPlusIconColor="@color/white_pressed"
+            fab:fab_labelStyle="@style/FabStyle"
+            fab:fab_labelsPosition="left"
+            fab:fab_addButtonStrokeVisible="false"
+            android:layout_marginBottom="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabMap_AD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_icon="@drawable/ic_map"
+                fab:fab_size="mini"
+                fab:fab_colorNormal="@color/light_primary"
+                fab:fab_title="Карта"
+                fab:fab_colorPressed="@color/white_pressed"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabLink_AD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                fab:fab_icon="@drawable/ic_link"
+                fab:fab_colorNormal="@color/light_primary"
+                fab:fab_size="mini"
+                fab:fab_title="Сайт"
+                fab:fab_colorPressed="@color/white_pressed"/>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabPhone_AD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_icon="@drawable/ic_phone"
+                fab:fab_colorNormal="@color/light_primary"
+                fab:fab_size="mini"
+                fab:fab_title="Позвонить"
+                fab:fab_colorPressed="@color/white_pressed" />
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    </RelativeLayout>
+
+

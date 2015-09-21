@@ -27,6 +27,4 @@
         android:id="@+id/rvBanks_AM"
         />
     </android.support.v4.widget.SwipeRefreshLayout>
-
-
 </LinearLayout>

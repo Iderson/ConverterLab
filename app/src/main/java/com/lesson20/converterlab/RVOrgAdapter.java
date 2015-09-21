@@ -111,8 +111,8 @@ public class RVOrgAdapter extends RecyclerView.Adapter<RVOrgAdapter.ContactViewH
 
                 OrganizationModel model =  (OrganizationModel) v.getTag(R.id.key_location);
                 Uri uriLoc = Uri.parse("geo:0,0?q="
-                        + model.getAddress() +
-                        " " + model.getTitle());
+                        + model.getCity()
+                        + model.getAddress() + " ");
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, uriLoc);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 mActivity.startActivity(mapIntent);
@@ -130,7 +130,6 @@ public class RVOrgAdapter extends RecyclerView.Adapter<RVOrgAdapter.ContactViewH
                                     ex.getMessage(),
                             Toast.LENGTH_SHORT).show();
                 }
-
         break;
             case R.id.btnDetails_OI:
                 String org =  (String) v.getTag(R.id.key_details);
