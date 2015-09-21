@@ -9,47 +9,44 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lesson20.converterlab.database.ConverterContentProvider;
 import com.lesson20.converterlab.database.ConverterDBHelper;
+import com.lesson20.converterlab.models.AskBidModel;
+import com.lesson20.converterlab.models.CurrencyModel;
 import com.lesson20.converterlab.models.OrganizationModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class DetailsActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor>{
+public class DetailsActivity extends AppCompatActivity{
     private Toolbar mToolbar;
     private ShareActionProvider mShareActionProvider;
     private String mID = "";
 
     TextView mTvBankName;
-    TextView mTvWebsiteName;
     TextView mTvRegion;
     TextView mTvAddressName;
     TextView mTvCity;
     TextView mTvPhoneName;
-    TextView mTvEmailName;
-    TextView mTvGBP;
-    TextView mTvUSD;
-    TextView mTvEUR;
-    TextView mTvRUB;
-    TextView mTvPLN;
+    TextView mTvLink;
+    private RecyclerView mRvCurrencies;
+    private OrganizationModel mOrganizationModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +56,12 @@ public class DetailsActivity extends AppCompatActivity
         initUI();
         Intent intent = getIntent();
         mID = intent.getStringExtra("_id");
-        getSupportLoaderManager().initLoader(0, null, this);
+        getOrgbyId(mID);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     private void initUI() {
@@ -68,17 +69,13 @@ public class DetailsActivity extends AppCompatActivity
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mRvCurrencies           = (RecyclerView) findViewById(R.id.rvCurrencies_AD);
         mTvBankName             = (TextView) findViewById(R.id.tvBankName_AD);
         mTvRegion               = (TextView) findViewById(R.id.tvRegion_AD);
         mTvCity                 = (TextView) findViewById(R.id.tvCity_AD);
-        mTvWebsiteName          = (TextView) findViewById(R.id.tvWebsiteName_AD);
         mTvAddressName          = (TextView) findViewById(R.id.tvAddressName_AD);
         mTvPhoneName            = (TextView) findViewById(R.id.tvPhoneName_AD);
-        mTvGBP                  = (TextView) findViewById(R.id.tvGBP_AD);
-        mTvUSD                  = (TextView) findViewById(R.id.tvUSD_AD);
-        mTvEUR                  = (TextView) findViewById(R.id.tvEUR_AD);
-        mTvRUB                  = (TextView) findViewById(R.id.tvRUB_AD);
-        mTvPLN                  = (TextView) findViewById(R.id.tvPLN_AD);
+        mTvLink                 = (TextView) findViewById(R.id.tvLink_AD);
     }
 
 
@@ -107,10 +104,10 @@ public class DetailsActivity extends AppCompatActivity
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_share:
-//                ShareDialog dialog = new ShareDialog();
-//                dialog.setBankInfo( new BankModel("text","text","text","text","text"));
-//                dialog.show(getFragmentManager(), "Edit Contact");
-//
+                ShareDialog dialog = new ShareDialog();
+                dialog.setBankInfo(mOrganizationModel);
+                dialog.show(getFragmentManager(), "Edit Contact");
+
 //                mShareActionProvider.setShareIntent(getDefaultIntent());
                 return true;
         }
@@ -176,72 +173,103 @@ public class DetailsActivity extends AppCompatActivity
         return bitmap;
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Uri uri = ConverterContentProvider.CONTENT_URI;
-        String selection = ConverterDBHelper.FIELD_ROW_ID + "=?";
-        String[] selectionArgs = { mID };
-        return new CursorLoader(this, uri, null, selection, selectionArgs, null);
-    }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        String id = "";
-        OrganizationModel organizationModel = null;
-        int count = 0;
-        String title = "";
-        String region = "";
-        String city = "";
-        String phone = "";
-        String address = "";
-        String link = "";
-        if (data == null) {
-            count = 0;
-        } else {
-            count = data.getCount();
-            data.moveToFirst();
-            id += data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_ROW_ID));
-            if (id.equals(mID)) {
-                title += data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_TITLE));
-                region += data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_REGION));
-                city += data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_CITY));
-                phone += data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_PHONE));
-                address += data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_ADDRESS));
-                populateInfo(new OrganizationModel(
+    private void getOrgbyId(String _id){
+        ConverterDBHelper DBOpenHelper = new ConverterDBHelper(this);
+        Cursor cursor = DBOpenHelper.getOrganizationDetail(_id);
+        Cursor cursor2 = DBOpenHelper.getCurrency(_id);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            String id = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_ROW_ID));
+            if (id.equals(_id)) {
+                String title = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_TITLE));
+                String region = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_REGION));
+                String city = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_CITY));
+                String phone = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_PHONE));
+                String address = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_ADDRESS));
+                String link = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_LINK));
+                mOrganizationModel = new OrganizationModel(
                         id,
                         title,
                         region,
                         city,
                         phone,
                         address,
-                        link));
+                        link);
+                populateInfo(mOrganizationModel);
             }
-            data.moveToNext();
+        }
+
+        if (cursor2 != null) {
+            cursor2.moveToFirst();
+            String id = "" + cursor2.getString(cursor2.getColumnIndex(ConverterDBHelper.FIELD_ROW_ID));
+            if (id.equals(_id)) {
+                ArrayList<CurrencyModel> currencyModels = new ArrayList<>();
+
+                CurrencyModel curr = new CurrencyModel();
+                for (int i = 0; i < cursor2.getColumnCount(); i++) {
+
+                    if (cursor2.getString(i) != null) {
+
+                        if(cursor2.getString(i).contains("_ASK")) {
+                            try {
+                                AskBidModel askBidModel = new AskBidModel();
+                                askBidModel.setAsk(Long.valueOf(cursor2.getString(i)));
+                                askBidModel.setBid(Long.valueOf(cursor2.getString(i + 1)));
+                                curr.setName(cursor2.getColumnName(i));
+                                curr.setCurrency(askBidModel);
+                            }
+                            catch (Exception ex){
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
+                currencyModels.add(curr);
+                populateRV(currencyModels);
+            }
 
         }
+
     }
+
+    private void populateRV(ArrayList<CurrencyModel> _list) {
+        RVCurrAdapter adapter = new RVCurrAdapter(DetailsActivity.this, _list);
+        mRvCurrencies.setAdapter(adapter);
+    }
+
+
 
     private void populateInfo(OrganizationModel _organizationModel) {
         try {
             mTvBankName.setText("" + _organizationModel.getTitle());
-            mTvRegion.setText("" + _organizationModel.getRegion());
-            mTvCity.setText("" + _organizationModel.getCity());
-            mTvWebsiteName.setText("" + _organizationModel.getLink());
-            mTvAddressName.setText("" + _organizationModel.getAddress());
-            mTvPhoneName.setText("" + _organizationModel.getPhone());
-//        mTvGBP.setText(_organizationModel.);
-//        mTvUSD.setText(_organizationModel.);
-//        mTvEUR.setText(_organizationModel.);
-//        mTvRUB.setText(_organizationModel.);
-//        mTvPLN.setText(_organizationModel.);
+            mTvRegion.setText("Регион (область): " + _organizationModel.getRegion());
+            mTvCity.setText("Город: " + _organizationModel.getCity());
+            mTvAddressName.setText("Адрес: " + _organizationModel.getAddress());
+            mTvPhoneName.setText("Телефон: " + _organizationModel.getPhone());
+            final String link = _organizationModel.getLink();
+            if (link != null) {
+                mTvLink.setText(
+                        Html.fromHtml(
+                        "Официальный сайт банка:\n <a href=\"" + link +
+                        "\">" + link + "</a> "));
+                mTvLink.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                        browserIntent.setData(Uri.parse(link));
+                        startActivity(browserIntent);
+                    }
+                });
+            }
+            getSupportActionBar().setTitle(_organizationModel.getTitle());
+            mToolbar.setSubtitle(_organizationModel.getCity());
         }
         catch(Exception ex){
             ex.printStackTrace();
         }
     }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-
-    }
 }

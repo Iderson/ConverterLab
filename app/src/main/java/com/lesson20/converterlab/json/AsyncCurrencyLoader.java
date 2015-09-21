@@ -26,6 +26,7 @@ public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<Organization
     private Context mContext;
     private Map<String, String> jsonCityId;
     private Map<String, String> jsonRegionId;
+    private Map<String, String> jsonCurrencyId;
 
     public AsyncCurrencyLoader(CallbackLoading callbackLoading, Context context) {
         this.mCallbackLoading   = callbackLoading;
@@ -78,6 +79,7 @@ public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<Organization
             JSONArray jsonOrgArray = jsonString.getJSONArray("organizations");
             jsonCityId = setIdToMap(jsonString.getJSONObject("cities"));
             jsonRegionId = setIdToMap(jsonString.getJSONObject("regions"));
+            jsonCurrencyId = setIdToMap(jsonString.getJSONObject("currencies"));
 
             for (int i = 0; i < jsonOrgArray.length(); i++) {
                 OrganizationModel orgModel = getOrganization(jsonOrgArray.getJSONObject(i));
@@ -96,9 +98,13 @@ public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<Organization
 
     private OrganizationModel getOrganization(JSONObject _jOrganization) {
         OrganizationModel org = new OrganizationModel();
+        ArrayList<CurrencyModel> currencyList = new ArrayList<>();
+        CurrencyModel currency = new CurrencyModel();
+        AskBidModel askBid = new AskBidModel();
+
         try{
 
-            org.setId( "" + _jOrganization.getString("id"));
+            org.setId("" + _jOrganization.getString("id"));
             org.setTitle("" + _jOrganization.getString("title"));
             org.setRegion("" + jsonRegionId.get(_jOrganization.getString("regionId")));
             org.setCity("" + jsonCityId.get(_jOrganization.getString("cityId")));
@@ -107,35 +113,54 @@ public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<Organization
             org.setAddress("" + _jOrganization.getString("address"));
             org.setPhone("" + _jOrganization.getString("phone"));
 
-            CurrencyModel currencies = new CurrencyModel();
-            currencies.USD = new AskBidModel();
-            currencies.EUR = new AskBidModel();
-            currencies.RUB = new AskBidModel();
-            currencies.PLN = new AskBidModel();
-            currencies.GBP = new AskBidModel();
-
-            JSONObject jsonCur = _jOrganization.getJSONObject("currencies");
+            JSONObject jsonObject = _jOrganization.getJSONObject("currencies");
+            Iterator it = (jsonObject.keys());
+            while (it.hasNext()) {
+                String n = (String) it.next();
+                try {
+                    currency.setName(n);
+                    JSONObject jsonAskBid = jsonObject.getJSONObject(n);
+                    askBid.setAsk(jsonAskBid.getLong("ask"));
+                    askBid.setBid(jsonAskBid.getLong("bid"));
+                    currency.setCurrency(askBid);
+                    currencyList.add(currency);
+//                    map.put(n, j.getString(n));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            org.setCurrencies(currencyList);
+            /*Map<String, String> jsonCur = new HashMap<>();
+            jsonCur = setIdToMap(jsonObject);
+            for (int i = 0; i < jsonCur.size(); i++) {
+                jsonObject.keys()
+            }
             JSONObject jsonUSD = jsonCur.getJSONObject("USD");
-            currencies.USD.ask = jsonUSD.getLong("ask");
-            currencies.USD.bid = jsonUSD.getLong("bid");
+            askBid.setAsk(jsonUSD.getLong("ask"));
+            askBid.setBid(jsonUSD.getLong("bid"));
+            currencies.setUSD(askBid);
 
             JSONObject jsonEUR = jsonCur.getJSONObject("EUR");
-            currencies.EUR.ask = jsonEUR.getLong("ask");
-            currencies.EUR.bid = jsonEUR.getLong("bid");
+            askBid.setAsk(jsonEUR.getLong("ask"));
+            askBid.setBid(jsonEUR.getLong("bid"));
+            currencies.setEUR(askBid);
 
             JSONObject jsonRUB = jsonCur.getJSONObject("RUB");
-            currencies.RUB.ask = jsonRUB.getLong("ask");
-            currencies.RUB.bid = jsonRUB.getLong("bid");
+            askBid.setAsk(jsonRUB.getLong("ask"));
+            askBid.setBid(jsonRUB.getLong("bid"));
+            currencies.setRUB(askBid);
 
             JSONObject jsonPLN = jsonCur.getJSONObject("PLN");
-            currencies.PLN.ask = jsonPLN.getLong("ask");
-            currencies.PLN.bid = jsonPLN.getLong("bid");
+            askBid.setAsk(jsonPLN.getLong("ask"));
+            askBid.setBid(jsonPLN.getLong("bid"));
+            currencies.setPLN(askBid);
 
             JSONObject jsonGBP = jsonCur.getJSONObject("GBP");
-            currencies.GBP.ask = jsonGBP.getLong("ask");
-            currencies.GBP.bid = jsonGBP.getLong("bid");
+            askBid.setAsk(jsonGBP.getLong("ask"));
+            askBid.setBid(jsonGBP.getLong("bid"));
+            currencies.setGBP(askBid);
 
-            org.setCurrencies(currencies);
+            org.setCurrencies(currencies);*/
     }
     catch (JSONException je){
         Log.e("Error", je.getMessage());

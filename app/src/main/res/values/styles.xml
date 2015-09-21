@@ -8,16 +8,25 @@
     <style name="main_title">
         <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:padding">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
     </style>
 
     <style name="medium_title">
         <item name="android:textSize">21sp</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+
+    <style name="small_title">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingLeft">8dp</item>
+
     </style>
 
     <style name="small_title_right">
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_gravity">right</item>
+        <item name="android:paddingRight">8dp</item>
         <item name="android:textSize">18sp</item>
     </style>
 

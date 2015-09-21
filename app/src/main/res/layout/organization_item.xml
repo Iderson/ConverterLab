@@ -9,7 +9,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cvNotificationInfo_AC">
+        android:id="@+id/cvNotificationInfo_OI">
 
         <LinearLayout
             android:orientation="vertical"
@@ -17,33 +17,33 @@
             android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/tvName_CI"
+                    android:id="@+id/tvName_OI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style = "@style/main_title"/>
                 <TextView
-                    android:id="@+id/tvRegion_CI"
+                    android:id="@+id/tvRegion_OI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvName_CI"
+                    android:layout_below="@id/tvName_OI"
                     style = "@style/medium_title" />
                 <TextView
-                    android:id="@+id/tvCity_CI"
+                    android:id="@+id/tvCity_OI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvRegion_CI"
+                    android:layout_below="@id/tvRegion_OI"
                     style = "@style/medium_title" />
                 <TextView
-                    android:id="@+id/tvPhone_CI"
+                    android:id="@+id/tvPhone_OI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvCity_CI"
+                    android:layout_below="@id/tvCity_OI"
                     style = "@style/small_title_right"/>
                 <TextView
-                    android:id="@+id/tvAddress_CI"
+                    android:id="@+id/tvAddress_OI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvPhone_CI"
+                    android:layout_below="@id/tvPhone_OI"
                     style = "@style/small_title_right" />
             <LinearLayout
                 android:orientation="horizontal"
@@ -51,28 +51,28 @@
                 android:layout_height="wrap_content"
                 android:background="@color/light_primary">
                 <ImageButton
-                    android:id="@+id/btnLink_CI"
+                    android:id="@+id/btnLink_OI"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_link"
                     style = "@style/button_action" />
                 <ImageButton
-                    android:id="@+id/btnLocation_CI"
+                    android:id="@+id/btnLocation_OI"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="fill_parent"
                     android:src="@drawable/ic_map"
                     style = "@style/button_action" />
                 <ImageButton
-                    android:id="@+id/btnCall_CI"
+                    android:id="@+id/btnCall_OI"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="fill_parent"
                     android:src="@drawable/ic_phone"
                     style = "@style/button_action" />
                 <ImageButton
-                    android:id="@+id/btnDetails_CI"
+                    android:id="@+id/btnDetails_OI"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="fill_parent"

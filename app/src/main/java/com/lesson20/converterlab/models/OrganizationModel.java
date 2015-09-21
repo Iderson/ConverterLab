@@ -1,5 +1,7 @@
 package com.lesson20.converterlab.models;
 
+import java.util.ArrayList;
+
 public class OrganizationModel {
     private String id;
     private String title;
@@ -8,7 +10,7 @@ public class OrganizationModel {
     private String phone;
     private String address;
     private String link;
-    private CurrencyModel currencies;
+    private ArrayList<CurrencyModel> currencies;
 
     public OrganizationModel() {
     }
@@ -21,6 +23,14 @@ public class OrganizationModel {
         phone = _phone;
         address = _address;
         link = _link;
+    }
+
+    public ArrayList<CurrencyModel> getCurrencies() {
+        return currencies;
+    }
+
+    public void setCurrencies(ArrayList<CurrencyModel> _currencies) {
+        currencies = _currencies;
     }
 
     public void setId(String _id) {
@@ -52,7 +62,6 @@ public class OrganizationModel {
     }
 
     public void setCurrencies(CurrencyModel _currencies) {
-        currencies = _currencies;
     }
 
     public String getId() {
@@ -83,7 +92,4 @@ public class OrganizationModel {
         return link;
     }
 
-    public CurrencyModel getCurrencies() {
-        return currencies;
-    }
 }

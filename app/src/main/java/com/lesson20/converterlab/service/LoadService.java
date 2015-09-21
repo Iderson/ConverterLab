@@ -37,24 +37,46 @@ public class LoadService extends Service implements CallbackLoading {
 
     @Override
     public void onSuccess(List<OrganizationModel> _organizationModelList) {
-//        RVAdapter adapter = new RVAdapter(LoadService.this, _organizationModelList);
-//        mRvBanks.setAdapter(adapter);
         ContentValues[]contentValues = new ContentValues[_organizationModelList.size()];
+        ContentValues[]contentValues2 = new ContentValues[_organizationModelList.size()];
         for (int i = 0; i < _organizationModelList.size(); i++) {
+
             contentValues[i] = new ContentValues();
+            contentValues2[i] = new ContentValues();
             contentValues[i].put(ConverterDBHelper.FIELD_ROW_ID, _organizationModelList.get(i).getId());
+            contentValues2[i].put(ConverterDBHelper.FIELD_ROW_ID, _organizationModelList.get(i).getId());
             contentValues[i].put(ConverterDBHelper.FIELD_TITLE, _organizationModelList.get(i).getTitle());
             contentValues[i].put(ConverterDBHelper.FIELD_REGION, _organizationModelList.get(i).getRegion());
             contentValues[i].put(ConverterDBHelper.FIELD_CITY, _organizationModelList.get(i).getCity());
             contentValues[i].put(ConverterDBHelper.FIELD_PHONE, _organizationModelList.get(i).getPhone());
             contentValues[i].put(ConverterDBHelper.FIELD_ADDRESS, _organizationModelList.get(i).getAddress());
             contentValues[i].put(ConverterDBHelper.FIELD_LINK, _organizationModelList.get(i).getLink());
+
+
+            /*ArrayList<CurrencyModel> list = _organizationModelList.get(i).getCurrencies();
+            for (int j = 0; j < list.size(); j++) {
+                contentValues2[i].put(list.get(j).getName() + "_ASK", list.get(j).getCurrency().getAsk());
+                contentValues2[i].put(list.get(j).getName() + "_BID", list.get(j).getCurrency().getBid());
+            }
+
+            ConverterDBHelper mConverterDBHelper = new ConverterDBHelper(getApplicationContext());
+            long rowID = mConverterDBHelper.insert(ConverterDBHelper.CURRENCY_TABLE, contentValues2[i]);
+            Uri _uri=null;
+            if(rowID>0){
+                _uri = ContentUris.withAppendedId(ConverterContentProvider.CONTENT_URI, rowID);
+            }else {
+                try {
+                    throw new SQLException("Failed to insert : " + _uri);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }*/
         }
 
-        InsertTask insertTask = new InsertTask();
-        insertTask.execute(contentValues);
-
+    InsertTask insertTask = new InsertTask();
+    insertTask.execute(contentValues);
     }
+
     private class InsertTask extends AsyncTask<ContentValues, Void, Void> {
         @Override
         protected Void doInBackground(ContentValues... contentValues) {

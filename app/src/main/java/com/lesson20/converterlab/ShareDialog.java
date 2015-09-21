@@ -16,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lesson20.converterlab.models.BankModel;
+import com.lesson20.converterlab.models.OrganizationModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,35 +28,48 @@ import java.io.IOException;
 
 public class ShareDialog extends DialogFragment implements View.OnClickListener {
     private View rootView;
-    private BankModel mBankInfo;
+    private OrganizationModel mBankInfo;
     private ImageView mIvBitmapInfo;
-//    private LinearLayout view;
     private ShareActionProvider mShareActionProvider;
+    private View imgView;
+    private LinearLayout imgLayout;
+    private TextView mTvTitle;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        int width = getResources().getDimensionPixelSize(R.dimen.popup_width);
 //        int height = getResources().getDimensionPixelSize(R.dimen.popup_height);
-//        getDialog().getWindow().setLayout(width, height);
+
 //todo: Create layout for Bank info and populate it
         rootView = inflater.inflate(R.layout.fragment_bank_share, null);
-        View rootView2 = inflater.inflate(R.layout.activity_details, null);
-//        view = (LinearLayout)rootView2.findViewById(R.id.llInfo);
+        imgView = inflater.inflate(R.layout.view_organization, null);
+        imgLayout = (LinearLayout) imgView.findViewById(R.id.rlTextInfo_VI);
         mIvBitmapInfo = (ImageView) rootView.findViewById(R.id.ivBitmapInfo_FS);
         Button mShare = (Button) rootView.findViewById(R.id.btnShare_FS);
 
-//        if(mBankInfo != null && view != null)
-//            loadImage();
+        mTvTitle = (TextView) imgView.findViewById(R.id.tvTitle_VI);
+        ((TextView) imgView.findViewById(R.id.tvRegion_VI)).setText(mBankInfo.getRegion());
+        ((TextView) imgView.findViewById(R.id.tvCity_VI)).setText(mBankInfo.getCity());
+        ((TextView) imgView.findViewById(R.id.tvAddress_VI)).setText(mBankInfo.getAddress());
+        ((TextView) imgView.findViewById(R.id.tvPhone_VI)).setText(mBankInfo.getPhone());
+        ((TextView) imgView.findViewById(R.id.tvLink_VI)).setText(mBankInfo.getLink());
+
+        mTvTitle.setText(mBankInfo.getTitle());
+        int width = imgLayout.getWidth();
+        int height = imgLayout.getHeight();
+        getDialog().getWindow().setLayout(width, height);
+        if(mBankInfo != null)
+            loadImage(imgLayout);
 
         mShare.setOnClickListener(this);
         return rootView;
 
     }
 
-    private void loadImage() {
-//        Bitmap bitmap = viewToBitmap(view);
-//        mIvBitmapInfo.setImageBitmap(bitmap);
+    private void loadImage(View _view) {
+        Bitmap bitmap = viewToBitmap(_view);
+        mIvBitmapInfo.setImageBitmap(bitmap);
     }
 
 
@@ -94,8 +109,9 @@ public class ShareDialog extends DialogFragment implements View.OnClickListener 
         return bmpUri;
     }
 
-    public void setBankInfo(BankModel _bankInfo) {
-         mBankInfo = _bankInfo;
+    public void setBankInfo(OrganizationModel _bankInfo) {
+        mBankInfo = _bankInfo;
+
     }
 
 //todo: correct drawing
@@ -111,7 +127,7 @@ public class ShareDialog extends DialogFragment implements View.OnClickListener 
         Bitmap b = Bitmap.createBitmap(view.getDrawingCache());
         view.setDrawingCacheEnabled(false);
 
-        Bitmap bitmap = Bitmap.createBitmap(view.getWidth() + 100, view.getHeight() + 100, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth() , view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
         return bitmap;

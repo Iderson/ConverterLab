@@ -1,5 +1,6 @@
 package com.lesson20.converterlab;
 
+import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,13 +12,15 @@ import android.os.IBinder;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -38,12 +41,15 @@ public class MainActivity extends AppCompatActivity
 
     private boolean mIsBound = false;
     private LoadService mBoundService;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private String mQueryStr = "";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        handleIntent(getIntent());
 
         doBindService();
         initUI();
@@ -56,12 +62,26 @@ public class MainActivity extends AppCompatActivity
         LinearLayoutManager llm = new LinearLayoutManager(MainActivity.this);
         mRvBanks = (RecyclerView) findViewById(R.id.rvBanks_AM);
         mRvBanks.setLayoutManager(llm);
+        mRvBanks.setItemAnimator(new DefaultItemAnimator());
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swpRefreshLayout_AM);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshItems();
+            }
+        });
 
-
-//        testRV();
         getSupportLoaderManager().initLoader(0, null, this);
     }
 
+    void refreshItems() {
+        getSupportLoaderManager().initLoader(0, null, this);
+        onItemsLoadComplete();
+    }
+
+    void onItemsLoadComplete() {
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             mBoundService = ((LoadService.LocalBinder)service).getService();
@@ -79,7 +99,7 @@ public class MainActivity extends AppCompatActivity
 
     void doBindService() {
         Intent intent = new Intent(this, LoadService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        bindService(intent, mConnection, 0);
         mIsBound = true;
         startService(intent);
     }
@@ -94,18 +114,35 @@ public class MainActivity extends AppCompatActivity
 
 
     private void populateRV(List<OrganizationModel> _list) {
-        RVAdapter adapter = new RVAdapter(MainActivity.this, _list);
+        RVOrgAdapter adapter = new RVOrgAdapter(MainActivity.this, _list);
         mRvBanks.setAdapter(adapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mToolbar.inflateMenu(R.menu.menu_main);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        //todo: Configure the search info and add event listeners
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+//        mToolbar.inflateMenu(R.menu.menu_main);
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            mQueryStr = intent.getStringExtra(SearchManager.QUERY);
+        }
     }
 
     @Override
@@ -157,6 +194,12 @@ public class MainActivity extends AppCompatActivity
                 city = data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_CITY ));
                 phone = data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_PHONE ));
                 address = data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_ADDRESS ));
+                link = "" + data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_LINK));
+                if((!mQueryStr.equals("") &&
+                        (title.toLowerCase().contains(mQueryStr.toLowerCase().trim()) ||
+                                city.toLowerCase().contains(mQueryStr.toLowerCase().trim()) ||
+                                region.toLowerCase().contains(mQueryStr.toLowerCase().trim())))
+                        || mQueryStr.equals(""))
                 mBankList.add(new OrganizationModel(
                         id,
                         title,

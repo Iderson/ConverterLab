@@ -1,9 +1,22 @@
 package com.lesson20.converterlab.models;
 
 public class CurrencyModel {
-    public AskBidModel USD;
-    public AskBidModel EUR;
-    public AskBidModel RUB;
-    public AskBidModel PLN;
-    public AskBidModel GBP;
+    private String name;
+    private AskBidModel currency;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String _name) {
+        name = _name;
+    }
+
+    public AskBidModel getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(AskBidModel _currency) {
+        currency = _currency;
+    }
 }

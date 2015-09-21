@@ -16,7 +16,7 @@ import com.lesson20.converterlab.models.OrganizationModel;
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ContactViewHolder> implements View.OnClickListener {
+public class RVOrgAdapter extends RecyclerView.Adapter<RVOrgAdapter.ContactViewHolder> implements View.OnClickListener {
 
     private static final int KEY_DETAIL = 111;
     private static final int KEY_LINK = 222;
@@ -28,22 +28,24 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ContactViewHolder>
     private int lastPosition = -1;
 
 
-    RVAdapter(Activity activity, List<OrganizationModel> _orgList){
+    RVOrgAdapter(Activity activity, List<OrganizationModel> _orgList){
         mOrgList = _orgList;
         this.mActivity = activity;
         this.mLf        = LayoutInflater.from(mActivity);
     }
 
 
+
+
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.custom_item,
+                .inflate(R.layout.organization_item,
                         viewGroup,
                         false);
 
 //        LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View v = inflater.inflate(R.layout.custom_item, viewGroup, false);
+//        View v = inflater.inflate(R.layout.organization_item, viewGroup, false);
         return new ContactViewHolder(v);
     }
 
@@ -91,7 +93,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ContactViewHolder>
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.btnLink_CI:
+            case R.id.btnLink_OI:
                 try{
                     String url =  (String) v.getTag(R.id.key_link);
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW);
@@ -105,7 +107,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ContactViewHolder>
                             Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.btnLocation_CI:
+            case R.id.btnLocation_OI:
 
                 OrganizationModel model =  (OrganizationModel) v.getTag(R.id.key_location);
                 Uri uriLoc = Uri.parse("geo:0,0?q="
@@ -115,7 +117,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ContactViewHolder>
                 mapIntent.setPackage("com.google.android.apps.maps");
                 mActivity.startActivity(mapIntent);
                 break;
-            case R.id.btnCall_CI:
+            case R.id.btnCall_OI:
                 try{
                     String phoneNumber =  (String) v.getTag(R.id.key_call);
                     Intent dialIntent = new Intent(Intent.ACTION_DIAL);
@@ -130,7 +132,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ContactViewHolder>
                 }
 
         break;
-            case R.id.btnDetails_CI:
+            case R.id.btnDetails_OI:
                 String org =  (String) v.getTag(R.id.key_details);
                 Intent detailIntent = new Intent(mActivity, DetailsActivity.class);
                 detailIntent.putExtra("_id", org);
@@ -157,17 +159,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ContactViewHolder>
         public ContactViewHolder(View itemView) {
             super(itemView);
 
-            mHolderName         = (TextView)    itemView.findViewById(R.id.tvName_CI);
-            mHolderCity         = (TextView)    itemView.findViewById(R.id.tvCity_CI);
-            mHolderRegion       = (TextView)    itemView.findViewById(R.id.tvRegion_CI);
-            mHolderPhoneMain    = (TextView)    itemView.findViewById(R.id.tvPhone_CI);
-            mHolderAddress      = (TextView)    itemView.findViewById(R.id.tvAddress_CI);
-            mContainer          = (CardView)    itemView.findViewById(R.id.cvNotificationInfo_AC);
+            mHolderName         = (TextView)    itemView.findViewById(R.id.tvName_OI);
+            mHolderCity         = (TextView)    itemView.findViewById(R.id.tvCity_OI);
+            mHolderRegion       = (TextView)    itemView.findViewById(R.id.tvRegion_OI);
+            mHolderPhoneMain    = (TextView)    itemView.findViewById(R.id.tvPhone_OI);
+            mHolderAddress      = (TextView)    itemView.findViewById(R.id.tvAddress_OI);
+            mContainer          = (CardView)    itemView.findViewById(R.id.cvNotificationInfo_OI);
 
-            btnLink     = (ImageButton) itemView.findViewById(R.id.btnLink_CI);
-            btnLocation = (ImageButton) itemView.findViewById(R.id.btnLocation_CI);
-            btnCall     = (ImageButton) itemView.findViewById(R.id.btnCall_CI);
-            btnDetails  = (ImageButton) itemView.findViewById(R.id.btnDetails_CI);
+            btnLink     = (ImageButton) itemView.findViewById(R.id.btnLink_OI);
+            btnLocation = (ImageButton) itemView.findViewById(R.id.btnLocation_OI);
+            btnCall     = (ImageButton) itemView.findViewById(R.id.btnCall_OI);
+            btnDetails  = (ImageButton) itemView.findViewById(R.id.btnDetails_OI);
 
 //            mView = (OrganizationView) itemView;
 //            mView = new OrganizationView(itemView.getContext());

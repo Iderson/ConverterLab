@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ConverterLab</string>
+    <string name="app_name">Converter Lab</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -10,4 +10,5 @@
     <string name="load_service_started">Обновление базы курса валют</string>
     <string name="load_service_disconnected">Service disconnected</string>
     <string name="load_service_progress">Download in progress</string>
+    <string name="search_hint">Поиск (локальный) банков</string>
 </resources>
