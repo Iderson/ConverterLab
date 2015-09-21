@@ -18,20 +18,12 @@ import java.util.List;
 
 public class RVOrgAdapter extends RecyclerView.Adapter<RVOrgAdapter.ContactViewHolder> implements View.OnClickListener {
 
-    private static final int KEY_DETAIL = 111;
-    private static final int KEY_LINK = 222;
-    private static final int KEY_LOCATION = 333;
-    private static final int KEY_CALL = 444;
-    private LayoutInflater mLf;
     private List<OrganizationModel> mOrgList;
-    private Activity         mActivity;
-    private int lastPosition = -1;
-
+    private Activity                mActivity;
 
     RVOrgAdapter(Activity activity, List<OrganizationModel> _orgList){
         mOrgList = _orgList;
         this.mActivity = activity;
-        this.mLf        = LayoutInflater.from(mActivity);
     }
 
 
@@ -44,8 +36,6 @@ public class RVOrgAdapter extends RecyclerView.Adapter<RVOrgAdapter.ContactViewH
                         viewGroup,
                         false);
 
-//        LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View v = inflater.inflate(R.layout.organization_item, viewGroup, false);
         return new ContactViewHolder(v);
     }
 
@@ -54,11 +44,11 @@ public class RVOrgAdapter extends RecyclerView.Adapter<RVOrgAdapter.ContactViewH
     @Override
     public void onBindViewHolder(final ContactViewHolder personViewHolder, int i) {
 
-        String title = mOrgList.get(i).getTitle();
-        String city = mOrgList.get(i).getCity();
-        String region = mOrgList.get(i).getRegion();
-        String phone = mOrgList.get(i).getPhone();
-        String address = mOrgList.get(i).getAddress();
+        String title    = mOrgList.get(i).getTitle();
+        String city     = mOrgList.get(i).getCity();
+        String region   = mOrgList.get(i).getRegion();
+        String phone    = mOrgList.get(i).getPhone();
+        String address  = mOrgList.get(i).getAddress();
 
         personViewHolder.mHolderName         .setText(title);
         personViewHolder.mHolderCity         .setText(city);
@@ -169,11 +159,6 @@ public class RVOrgAdapter extends RecyclerView.Adapter<RVOrgAdapter.ContactViewH
             btnLocation = (ImageButton) itemView.findViewById(R.id.btnLocation_OI);
             btnCall     = (ImageButton) itemView.findViewById(R.id.btnCall_OI);
             btnDetails  = (ImageButton) itemView.findViewById(R.id.btnDetails_OI);
-
-//            mView = (OrganizationView) itemView;
-//            mView = new OrganizationView(itemView.getContext());
-
-
         }
     }
 }

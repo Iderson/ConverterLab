@@ -137,18 +137,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/llMain_AD"
-            fab:fab_icon="@drawable/ic_menu"
             fab:fab_addButtonColorNormal="@color/pink"
             fab:fab_addButtonColorPressed="@color/pink_pressed"
             fab:fab_addButtonPlusIconColor="@color/white_pressed"
-            fab:fab_labelStyle="@style/FabStyle"
+            fab:fab_labelStyle="@style/menu_labels_style"
             fab:fab_labelsPosition="left"
             fab:fab_addButtonStrokeVisible="false"
-            android:layout_marginBottom="16dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            style = "@style/FabStyle">
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabMap_AD"
@@ -164,7 +159,6 @@
                 android:id="@+id/fabLink_AD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="center"
                 fab:fab_icon="@drawable/ic_link"
                 fab:fab_colorNormal="@color/light_primary"
                 fab:fab_size="mini"

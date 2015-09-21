@@ -2,8 +2,8 @@ package com.lesson20.converterlab.models;
 
 
 public class AskBidModel {
-    public long ask;
-    public long bid;
+    private long ask;
+    private long bid;
 
     public long getAsk() {
         return ask;

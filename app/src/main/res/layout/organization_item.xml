@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="8dp">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
+        android:id="@+id/cvNotificationInfo_OI"
         android:layout_height="wrap_content"
-        android:id="@+id/cvNotificationInfo_OI">
+        app:cardCornerRadius="8dp"
+        android:layout_margin="8dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -25,25 +27,21 @@
                     android:id="@+id/tvRegion_OI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvName_OI"
                     style = "@style/medium_title" />
                 <TextView
                     android:id="@+id/tvCity_OI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvRegion_OI"
                     style = "@style/medium_title" />
                 <TextView
                     android:id="@+id/tvPhone_OI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvCity_OI"
                     style = "@style/small_title_right"/>
                 <TextView
                     android:id="@+id/tvAddress_OI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvPhone_OI"
                     style = "@style/small_title_right" />
             <LinearLayout
                 android:orientation="horizontal"

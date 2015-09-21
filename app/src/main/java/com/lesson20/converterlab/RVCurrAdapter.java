@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,8 +18,6 @@ public class RVCurrAdapter extends RecyclerView.Adapter<RVCurrAdapter.ContactVie
     private LayoutInflater mLf;
     private ArrayList<CurrencyModel> mCurrency;
     private Activity         mActivity;
-    private int lastPosition = -1;
-
 
     RVCurrAdapter(Activity activity, ArrayList<CurrencyModel> _currency){
         mCurrency = _currency;
@@ -32,12 +29,10 @@ public class RVCurrAdapter extends RecyclerView.Adapter<RVCurrAdapter.ContactVie
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.organization_item,
+                .inflate(R.layout.currency_item,
                         viewGroup,
                         false);
 
-//        LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View v = inflater.inflate(R.layout.organization_item, viewGroup, false);
         return new ContactViewHolder(v);
     }
 
@@ -81,13 +76,8 @@ public class RVCurrAdapter extends RecyclerView.Adapter<RVCurrAdapter.ContactVie
             mHolderAsk          = (TextView)    itemView.findViewById(R.id.tvValueAsk_CI);
             mHolderBid          = (TextView)    itemView.findViewById(R.id.tvValueBid_CI);
 
-            imgUp       = (ImageButton) itemView.findViewById(R.id.btnLink_OI);
-            imgDown     = (ImageButton) itemView.findViewById(R.id.btnLocation_OI);
-
-
-//            mView = (OrganizationView) itemView;
-//            mView = new OrganizationView(itemView.getContext());
-
+//            imgUp       = (ImageButton) itemView.findViewById(R.id.btnLink_OI);
+//            imgDown     = (ImageButton) itemView.findViewById(R.id.btnLocation_OI);
 
         }
     }

@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class ConverterDBHelper extends SQLiteOpenHelper{
 
     private static String DBNAME = "convertersqlite";
-    private static int VERSION = 1;
+    private static final   int VERSION = 1;
     public static final String FIELD_ROW_ID = "_id";
     public static final String FIELD_TITLE = "title";
     public static final String FIELD_REGION = "region";
@@ -20,7 +20,7 @@ public class ConverterDBHelper extends SQLiteOpenHelper{
 
     public static final String ORGANIZATION_TABLE = "organizations";
     public static final String CURRENCY_TABLE = "currencies";
-    private SQLiteDatabase mDB;
+    private SQLiteDatabase     mDB;
 
     public ConverterDBHelper(Context context) {
         super(context, DBNAME, null, VERSION);

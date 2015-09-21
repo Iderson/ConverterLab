@@ -2,13 +2,8 @@ package com.lesson20.converterlab;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,9 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,9 +23,6 @@ import com.lesson20.converterlab.models.AskBidModel;
 import com.lesson20.converterlab.models.CurrencyModel;
 import com.lesson20.converterlab.models.OrganizationModel;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class DetailsActivity extends AppCompatActivity implements View.OnClickListener {
@@ -41,14 +30,14 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     private ShareActionProvider mShareActionProvider;
     private String mID = "";
 
-    TextView mTvBankName;
-    TextView mTvRegion;
-    TextView mTvAddressName;
-    TextView mTvCity;
-    TextView mTvPhoneName;
-    TextView mTvLink;
-    private RecyclerView mRvCurrencies;
-    private OrganizationModel mOrganizationModel;
+    private TextView            mTvBankName;
+    private TextView            mTvRegion;
+    private TextView            mTvAddressName;
+    private TextView            mTvCity;
+    private TextView            mTvPhoneName;
+    private TextView            mTvLink;
+    private RecyclerView        mRvCurrencies;
+    private OrganizationModel   mOrganizationModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +71,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         ((FloatingActionButton) findViewById(R.id.fabMap_AD)).setOnClickListener(this);
         ((FloatingActionButton) findViewById(R.id.fabLink_AD)).setOnClickListener(this);
         ((FloatingActionButton) findViewById(R.id.fabPhone_AD)).setOnClickListener(this);
-        ((SwipeRefreshLayout) findViewById(R.id.swpRefreshLayout_AM)).setOnRefreshListener(
+        ((SwipeRefreshLayout) findViewById(R.id.swpRefreshLayout_AD)).setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
@@ -116,77 +105,18 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+
                 return true;
             case R.id.action_share:
                 ShareDialog dialog = new ShareDialog();
                 dialog.setBankInfo(mOrganizationModel);
                 dialog.show(getFragmentManager(), "Edit Contact");
 
-//                mShareActionProvider.setShareIntent(getDefaultIntent());
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-    private Intent getDefaultIntent() {
-        Bitmap bitmap = drawBitmap("Text\n Txt\n text\n", 100, 500);
-        Uri bmpUri = getImageUri(bitmap);
-        Intent shareIntent = new Intent();
-        if (bmpUri != null) {
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.setType("image/*");
-            shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-            startActivity(Intent.createChooser(shareIntent, "Share Image"));
-        } else {
-            Toast.makeText(this, "No image loaded", Toast.LENGTH_SHORT).show();
-        }
-        //todo: make a bitmap image (scrollable)
-
-        return shareIntent;
-    }
-
-    public Uri getImageUri( Bitmap _bitmap) {Uri bmpUri = null;
-        try {
-            File file = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOWNLOADS), "share_image_" + System.currentTimeMillis() + ".png");
-            file.getParentFile().mkdirs();
-            FileOutputStream out = new FileOutputStream(file);
-            _bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
-            out.close();
-            bmpUri = Uri.fromFile(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bmpUri;
-    }
-
-    private Bitmap drawBitmap(String text, int textWidth, int textSize) {
-        TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG
-                | Paint.LINEAR_TEXT_FLAG);
-        textPaint.setStyle(Paint.Style.FILL);
-        textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(textSize);
-        StaticLayout mTextLayout = new StaticLayout(text, textPaint,
-                textWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-
-        Bitmap bitmap = Bitmap.createBitmap(textWidth, mTextLayout.getHeight(), Bitmap.Config.RGB_565);
-        Canvas canvas = new Canvas(bitmap);
-
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG
-                | Paint.LINEAR_TEXT_FLAG);
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.WHITE);
-        canvas.drawPaint(paint);
-
-        canvas.save();
-        canvas.translate(0, 0);
-        mTextLayout.draw(canvas);
-        canvas.restore();
-
-        return bitmap;
-    }
-
 
     private void getFromDB(String _id){
         ConverterDBHelper DBOpenHelper = new ConverterDBHelper(this);
@@ -241,12 +171,10 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 }
 
-                currencyModels.add(curr);
                 populateRV(currencyModels);
             }
 
         }
-
     }
 
     private void populateRV(ArrayList<CurrencyModel> _list) {
@@ -258,11 +186,11 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
     private void populateInfo() {
         try {
-            mTvBankName.setText("" + mOrganizationModel.getTitle());
-            mTvRegion.setText("Регион (область): " + mOrganizationModel.getRegion());
-            mTvCity.setText("Город: " + mOrganizationModel.getCity());
-            mTvAddressName.setText("Адрес: " + mOrganizationModel.getAddress());
-            mTvPhoneName.setText("Телефон: " + mOrganizationModel.getPhone());
+            mTvBankName     .setText("" + mOrganizationModel.getTitle());
+            mTvRegion       .setText("Регион (область): " + mOrganizationModel.getRegion());
+            mTvCity         .setText("Город: " + mOrganizationModel.getCity());
+            mTvAddressName  .setText("Адрес: " + mOrganizationModel.getAddress());
+            mTvPhoneName    .setText("Телефон: " + mOrganizationModel.getPhone());
             final String link = mOrganizationModel.getLink();
             if (link != null) {
                 mTvLink.setText(
