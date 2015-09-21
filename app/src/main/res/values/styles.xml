@@ -54,6 +54,7 @@
         <item name="elevation">6dp</item>
         <item name="pressedTranslationZ">12dp</item>
         <item name="rippleColor">@android:color/white</item>
+
     </style>
     <dimen name="fab_compat_margin">16dp</dimen>
 </resources>

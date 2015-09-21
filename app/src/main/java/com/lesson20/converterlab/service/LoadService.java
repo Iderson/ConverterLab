@@ -4,8 +4,11 @@ import android.annotation.TargetApi;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.SQLException;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Build;
@@ -21,8 +24,10 @@ import com.lesson20.converterlab.database.ConverterContentProvider;
 import com.lesson20.converterlab.database.ConverterDBHelper;
 import com.lesson20.converterlab.json.AsyncCurrencyLoader;
 import com.lesson20.converterlab.json.CallbackLoading;
+import com.lesson20.converterlab.models.CurrencyModel;
 import com.lesson20.converterlab.models.OrganizationModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,7 +58,7 @@ public class LoadService extends Service implements CallbackLoading {
             contentValues[i].put(ConverterDBHelper.FIELD_LINK, _organizationModelList.get(i).getLink());
 
 
-            /*ArrayList<CurrencyModel> list = _organizationModelList.get(i).getCurrencies();
+            ArrayList<CurrencyModel> list = _organizationModelList.get(i).getCurrencies();
             for (int j = 0; j < list.size(); j++) {
                 contentValues2[i].put(list.get(j).getName() + "_ASK", list.get(j).getCurrency().getAsk());
                 contentValues2[i].put(list.get(j).getName() + "_BID", list.get(j).getCurrency().getBid());
@@ -70,7 +75,7 @@ public class LoadService extends Service implements CallbackLoading {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }*/
+            }
         }
 
     InsertTask insertTask = new InsertTask();
