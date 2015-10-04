@@ -157,15 +157,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_search)
-        {
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Uri uri = ConverterContentProvider.CONTENT_URI;
         return new CursorLoader(this, uri, null, null, null, null);

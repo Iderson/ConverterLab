@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.lesson20.converterlab.MainActivity;
 import com.lesson20.converterlab.models.AskBidModel;
 import com.lesson20.converterlab.models.CurrencyModel;
 import com.lesson20.converterlab.models.OrganizationModel;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<OrganizationModel>>{
+public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<OrganizationModel>> {
 
     private CallbackLoading mCallbackLoading;
     private Context mContext;
@@ -50,7 +51,7 @@ public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<Organization
     @Override
     protected void onPostExecute(List<OrganizationModel> _organizationModels) {
         super.onPostExecute(_organizationModels);
-        if (_organizationModels != null){
+        if (_organizationModels != null) {
             mCallbackLoading.onSuccess(_organizationModels);
         } else mCallbackLoading.onFailure("Error parsing");
     }
@@ -85,8 +86,7 @@ public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<Organization
                 OrganizationModel orgModel = getOrganization(jsonOrgArray.getJSONObject(i));
                 organizationModels.add(orgModel);
             }
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
@@ -100,7 +100,7 @@ public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<Organization
         CurrencyModel currency = new CurrencyModel();
         AskBidModel askBid = new AskBidModel();
 
-        try{
+        try {
 
             org.setId       ("" + _jOrganization.getString("id"));
             org.setTitle    ("" + _jOrganization.getString("title"));
@@ -128,15 +128,13 @@ public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<Organization
             }
             org.setCurrencies(currencyList);
 
-    }
-    catch (JSONException je){
-        Log.e("Error", je.getMessage());
-        je.printStackTrace();
-    }
-    catch (Exception e){
-        Log.e("Error", e.getMessage());
-        e.printStackTrace();
-    }
+        } catch (JSONException je) {
+            Log.e("Error", je.getMessage());
+            je.printStackTrace();
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+            e.printStackTrace();
+        }
 
 
         return org;

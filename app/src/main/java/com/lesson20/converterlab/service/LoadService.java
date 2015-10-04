@@ -60,11 +60,11 @@ public class LoadService extends Service implements CallbackLoading {
 
             ArrayList<CurrencyModel> list = _organizationModelList.get(i).getCurrencies();
             for (int j = 0; j < list.size(); j++) {
-                contentValues2[i].put(list.get(j).getName() + "_ASK", list.get(j).getCurrency().getAsk());
-                contentValues2[i].put(list.get(j).getName() + "_BID", list.get(j).getCurrency().getBid());
+                contentValues[i].put(list.get(j).getName() + "_ASK", list.get(j).getCurrency().getAsk());
+                contentValues[i].put(list.get(j).getName() + "_BID", list.get(j).getCurrency().getBid());
             }
 
-            ConverterDBHelper mConverterDBHelper = new ConverterDBHelper(getApplicationContext());
+           /* ConverterDBHelper mConverterDBHelper = new ConverterDBHelper(getApplicationContext());
             long rowID = mConverterDBHelper.insert(ConverterDBHelper.CURRENCY_TABLE, contentValues2[i]);
             Uri _uri=null;
             if(rowID>0){
@@ -75,11 +75,11 @@ public class LoadService extends Service implements CallbackLoading {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }
+            }*/
         }
 
-    InsertTask insertTask = new InsertTask();
-    insertTask.execute(contentValues);
+        InsertTask insertTask = new InsertTask();
+        insertTask.execute(contentValues);
     }
 
     private class InsertTask extends AsyncTask<ContentValues, Void, Void> {

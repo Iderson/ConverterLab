@@ -21,117 +21,94 @@
                       android:layout_height="wrap_content"
                       android:orientation="vertical"
                       android:layout_below="@+id/toolbar_AD">
-            <ScrollView android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView_AD"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="4dp"
+                android:layout_margin="4dp" >
                 <LinearLayout
+                    android:id="@+id/llInfo_AD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvBankName_AD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style = "@style/main_title"
+                        android:textColor="@color/title_color" />
+                    <TextView
+                        android:id="@+id/tvLink_AD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style = "@style/small_title"
+                        android:clickable="true"/>
+                    <TextView
+                        android:id="@+id/tvRegion_AD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style = "@style/small_title"  />
+                    <TextView
+                        android:id="@+id/tvCity_AD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style = "@style/small_title"  />
+                    <TextView
+                        android:id="@+id/tvAddressName_AD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style = "@style/small_title"  />
+                    <TextView
+                        android:id="@+id/tvPhoneName_AD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style = "@style/small_title" />
+                </LinearLayout>
+                </android.support.v7.widget.CardView>
+
                 <android.support.v7.widget.CardView
-                    android:id="@+id/cardView_AD"
-                    android:layout_width="fill_parent"
+                    android:id="@+id/cvCurrencyHeader_AD"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="4dp"
-                    android:layout_margin="4dp" >
-                    <LinearLayout
-                        android:id="@+id/llInfo_AD"
+                    android:layout_margin="4dp">
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:padding="8dp">
 
                         <TextView
-                            android:id="@+id/tvBankName_AD"
+                            android:id="@+id/tvHeaderName_AD"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style = "@style/main_title"
-                            android:textColor="@color/title_color" />
+                            android:text="@string/header_name"
+                            style = "@style/medium_title"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
                         <TextView
-                            android:id="@+id/tvLink_AD"
+                            android:id="@+id/tvHeaderValue_AD"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style = "@style/small_title"
-                            android:clickable="true"/>
-                        <TextView
-                            android:id="@+id/tvRegion_AD"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style = "@style/small_title"  />
-                        <TextView
-                            android:id="@+id/tvCity_AD"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style = "@style/small_title"  />
-                        <TextView
-                            android:id="@+id/tvAddressName_AD"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style = "@style/small_title"  />
-                        <TextView
-                            android:id="@+id/tvPhoneName_AD"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style = "@style/small_title" />
-                    </LinearLayout>
-                    </android.support.v7.widget.CardView>
+                            android:text="@string/header_value"
+                            style = "@style/small_title_right"/>
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
 
-                    <android.support.v7.widget.CardView
-                        android:id="@+id/cvCurrencyHeader_AD"
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/swpRefreshLayout_AD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvCurrencies_AD"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp"
-                        android:layout_margin="4dp">
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="8dp">
-
-                            <TextView
-                                android:id="@+id/tvHeaderName_AD"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/header_name"
-                                style = "@style/medium_title"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentStart="true" />
-                            <TextView
-                                android:id="@+id/tvHeaderValue_AD"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/header_value"
-                                style = "@style/small_title_right"/>
-                        </RelativeLayout>
-                    </android.support.v7.widget.CardView>
-
-                    <android.support.v7.widget.CardView
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="4dp"
-                        android:layout_margin="4dp">
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp">
-
-                            <android.support.v4.widget.SwipeRefreshLayout
-                                android:id="@+id/swpRefreshLayout_AD"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <android.support.v7.widget.RecyclerView
-                                    android:id="@+id/rvCurrencies_AD"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    />
-                            </android.support.v4.widget.SwipeRefreshLayout>
-                        </LinearLayout>
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
-            </ScrollView>
-        </LinearLayout>
+                        android:layout_height="wrap_content" />
+                </android.support.v4.widget.SwipeRefreshLayout>
+            </LinearLayout>
         <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:id="@+id/famMenu_AD"
             android:layout_width="wrap_content"

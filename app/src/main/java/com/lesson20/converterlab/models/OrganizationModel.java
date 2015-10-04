@@ -29,67 +29,67 @@ public class OrganizationModel {
         return currencies;
     }
 
+    public void setCurrencies(CurrencyModel _currencies) {
+    }
+
     public void setCurrencies(ArrayList<CurrencyModel> _currencies) {
         currencies = _currencies;
-    }
-
-    public void setId(String _id) {
-        id = _id;
-    }
-
-    public void setTitle(String _title) {
-        title = _title;
-    }
-
-    public void setRegion(String _region) {
-        region = _region;
-    }
-
-    public void setCity(String _city) {
-        city = _city;
-    }
-
-    public void setPhone(String _phone) {
-        phone = _phone;
-    }
-
-    public void setAddress(String _address) {
-        address = _address;
-    }
-
-    public void setLink(String _link) {
-        link = _link;
-    }
-
-    public void setCurrencies(CurrencyModel _currencies) {
     }
 
     public String getId() {
         return id;
     }
 
+    public void setId(String _id) {
+        id = _id;
+    }
+
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String _title) {
+        title = _title;
     }
 
     public String getRegion() {
         return region;
     }
 
+    public void setRegion(String _region) {
+        region = _region;
+    }
+
     public String getCity() {
         return city;
+    }
+
+    public void setCity(String _city) {
+        city = _city;
     }
 
     public String getPhone() {
         return phone;
     }
 
+    public void setPhone(String _phone) {
+        phone = _phone;
+    }
+
     public String getAddress() {
         return address;
     }
 
+    public void setAddress(String _address) {
+        address = _address;
+    }
+
     public String getLink() {
         return link;
+    }
+
+    public void setLink(String _link) {
+        link = _link;
     }
 
 }

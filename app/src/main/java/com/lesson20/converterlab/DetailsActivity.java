@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ import com.lesson20.converterlab.models.CurrencyModel;
 import com.lesson20.converterlab.models.OrganizationModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity implements View.OnClickListener {
     private Toolbar mToolbar;
@@ -59,6 +61,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         mToolbar = (Toolbar) findViewById(R.id.toolbar_AD);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        LinearLayoutManager llm = new LinearLayoutManager(DetailsActivity.this);
 
         mRvCurrencies           = (RecyclerView) findViewById(R.id.rvCurrencies_AD);
         mTvBankName             = (TextView) findViewById(R.id.tvBankName_AD);
@@ -68,6 +71,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         mTvPhoneName            = (TextView) findViewById(R.id.tvPhoneName_AD);
         mTvLink                 = (TextView) findViewById(R.id.tvLink_AD);
 
+        mRvCurrencies.setLayoutManager(llm);
         ((FloatingActionButton) findViewById(R.id.fabMap_AD)).setOnClickListener(this);
         ((FloatingActionButton) findViewById(R.id.fabLink_AD)).setOnClickListener(this);
         ((FloatingActionButton) findViewById(R.id.fabPhone_AD)).setOnClickListener(this);
@@ -154,19 +158,17 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 CurrencyModel curr = new CurrencyModel();
                 for (int i = 0; i < cursor2.getColumnCount(); i++) {
 
-                    if (cursor2.getString(i) != null) {
-
-                        if(cursor2.getString(i).contains("_ASK")) {
-                            try {
-                                AskBidModel askBidModel = new AskBidModel();
-                                askBidModel.setAsk(Long.valueOf(cursor2.getString(i)));
-                                askBidModel.setBid(Long.valueOf(cursor2.getString(i + 1)));
-                                curr.setName(cursor2.getColumnName(i));
-                                curr.setCurrency(askBidModel);
-                            }
-                            catch (Exception ex){
-                                ex.printStackTrace();
-                            }
+                    if(!cursor2.isNull(i) && cursor2.getColumnName(i).contains("_ASK")) {
+                        try {
+                            AskBidModel askBidModel = new AskBidModel();
+                            askBidModel.setAsk(Long.valueOf(cursor2.getString(i)));
+                            askBidModel.setBid(Long.valueOf(cursor2.getString(i + 1)));
+                            curr.setName(cursor2.getColumnName(i));
+                            curr.setCurrency(askBidModel);
+                            currencyModels.add(curr);
+                        }
+                        catch (Exception ex){
+                            ex.printStackTrace();
                         }
                     }
                 }

@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import java.sql.SQLException;
+import java.util.Iterator;
 
 public class ConverterContentProvider extends ContentProvider{
 
@@ -31,10 +32,45 @@ public class ConverterContentProvider extends ContentProvider{
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        long rowID = mConverterDBHelper.insert(values);
+        long rowID = 0;
+        long rowID2 = 0;
+        ContentValues contentValues = new ContentValues();
+        ContentValues contentValues2 = new ContentValues();
+        contentValues.put(ConverterDBHelper.FIELD_ROW_ID, (String) values.get(ConverterDBHelper.FIELD_ROW_ID));
+        contentValues2.put(ConverterDBHelper.FIELD_ROW_ID, String.valueOf(values.get(ConverterDBHelper.FIELD_ROW_ID)));
+        Iterator it = values.keySet().iterator();
+        while (it.hasNext()) {
+            String n = (String) it.next();
+            if(n.contains("ASK"))
+                contentValues2.put(n, values.getAsString(n));
+            else if(n.contains("BID"))
+                contentValues2.put(n, values.getAsString(n));
+            else
+                contentValues.put(n, values.getAsString(n));
+
+        }
+        if(contentValues2.size()>0)
+            rowID = mConverterDBHelper.insert(
+                    ConverterDBHelper.CURRENCY_TABLE,
+                    contentValues2);
+        /*containsKey(String.format("%s | %s", "_ASK", "_BID")))
+            rowID = mConverterDBHelper.insert(
+                    ConverterDBHelper.CURRENCY_TABLE,
+                    values);
+        else*/
+            rowID2 = mConverterDBHelper.insert(contentValues);
         Uri _uri=null;
         if(rowID>0){
             _uri = ContentUris.withAppendedId(CONTENT_URI, rowID);
+        }else {
+            try {
+                throw new SQLException("Failed to insert : " + uri);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if(rowID2>0){
+            _uri = ContentUris.withAppendedId(CONTENT_URI, rowID2);
         }else {
             try {
                 throw new SQLException("Failed to insert : " + uri);

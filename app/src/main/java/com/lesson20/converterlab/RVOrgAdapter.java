@@ -26,9 +26,6 @@ public class RVOrgAdapter extends RecyclerView.Adapter<RVOrgAdapter.ContactViewH
         this.mActivity = activity;
     }
 
-
-
-
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
@@ -38,8 +35,6 @@ public class RVOrgAdapter extends RecyclerView.Adapter<RVOrgAdapter.ContactViewH
 
         return new ContactViewHolder(v);
     }
-
-
 
     @Override
     public void onBindViewHolder(final ContactViewHolder personViewHolder, int i) {

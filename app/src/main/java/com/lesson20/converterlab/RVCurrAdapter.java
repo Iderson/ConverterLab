@@ -15,14 +15,12 @@ import java.util.ArrayList;
 
 public class RVCurrAdapter extends RecyclerView.Adapter<RVCurrAdapter.ContactViewHolder> {
 
-    private LayoutInflater mLf;
     private ArrayList<CurrencyModel> mCurrency;
     private Activity         mActivity;
 
     RVCurrAdapter(Activity activity, ArrayList<CurrencyModel> _currency){
         mCurrency = _currency;
         this.mActivity = activity;
-        this.mLf        = LayoutInflater.from(mActivity);
     }
 
 
@@ -35,8 +33,6 @@ public class RVCurrAdapter extends RecyclerView.Adapter<RVCurrAdapter.ContactVie
 
         return new ContactViewHolder(v);
     }
-
-
 
     @Override
     public void onBindViewHolder(final ContactViewHolder personViewHolder, int i) {

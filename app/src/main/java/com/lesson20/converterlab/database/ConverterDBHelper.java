@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class ConverterDBHelper extends SQLiteOpenHelper{
 
-    private static String DBNAME = "convertersqlite";
+    private static String DBNAME = "convertersqlite.db";
     private static final   int VERSION = 1;
     public static final String FIELD_ROW_ID = "_id";
     public static final String FIELD_TITLE = "title";
@@ -192,21 +192,21 @@ public class ConverterDBHelper extends SQLiteOpenHelper{
     public Cursor getCurrency(String _id) {
         String selection = ConverterDBHelper.FIELD_ROW_ID + "=?";
         String[] selectionArgs = { _id };
-        return mDB.query(CURRENCY_TABLE, null, selection, selectionArgs, null, null, null);
+        return mDB.query(CURRENCY_TABLE,
+                null,
+                selection,
+                selectionArgs,
+                null, null, null);
     }
 
     public Cursor getOrganizationDetail(String _id) {
         String selection = ConverterDBHelper.FIELD_ROW_ID + "=?";
         String[] selectionArgs = { _id };
-        return mDB.query(ORGANIZATION_TABLE, new String[] {
-                FIELD_ROW_ID,
-                FIELD_TITLE,
-                FIELD_REGION,
-                FIELD_CITY,
-                FIELD_PHONE,
-                FIELD_ADDRESS,
-                FIELD_LINK
-        } , selection, selectionArgs, null, null, null);
+        return mDB.query(ORGANIZATION_TABLE,
+                null,
+                selection,
+                selectionArgs,
+                null, null, null);
     }
 
 
