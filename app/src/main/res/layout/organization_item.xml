@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:id="@+id/cvNotificationInfo_OI"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp"
-        android:layout_margin="8dp">
+        app:cardCornerRadius="4dp"
+        style="@style/card_rounded">
 
         <LinearLayout
             android:orientation="vertical"

@@ -1,4 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -61,5 +63,10 @@
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/dark_primary</item>
     </style>
+
+    <style name="card_rounded">
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
     <dimen name="fab_compat_margin">16dp</dimen>
 </resources>

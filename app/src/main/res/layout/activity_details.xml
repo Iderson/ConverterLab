@@ -27,7 +27,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="4dp"
-                android:layout_margin="4dp" >
+                style="@style/card_rounded">
                 <LinearLayout
                     android:id="@+id/llInfo_AD"
                     android:layout_width="match_parent"
@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="4dp"
-                    android:layout_margin="4dp">
+                    style="@style/card_rounded">
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -98,16 +98,22 @@
                     </RelativeLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v4.widget.SwipeRefreshLayout
-                    android:id="@+id/swpRefreshLayout_AD"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cvNotificationInfo_CI"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp"
+                    style="@style/card_rounded">
+                    <android.support.v4.widget.SwipeRefreshLayout
+                        android:id="@+id/swpRefreshLayout_AD"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rvCurrencies_AD"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
-                </android.support.v4.widget.SwipeRefreshLayout>
+                    </android.support.v4.widget.SwipeRefreshLayout>
+                </android.support.v7.widget.CardView>
             </LinearLayout>
         <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:id="@+id/famMenu_AD"

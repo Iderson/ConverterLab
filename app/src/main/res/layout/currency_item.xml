@@ -3,14 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:id="@+id/cvNotificationInfo_CI"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp">
+    android:layout_height="wrap_content">
 
         <RelativeLayout
             android:orientation="vertical"
@@ -37,5 +30,4 @@
                 android:layout_below="@id/tvValueAsk_CI"
                 style = "@style/small_title_right"/>
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
 </LinearLayout>
