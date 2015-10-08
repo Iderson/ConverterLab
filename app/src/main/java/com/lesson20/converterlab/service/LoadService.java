@@ -4,11 +4,8 @@ import android.annotation.TargetApi;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.SQLException;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Build;
@@ -43,13 +40,10 @@ public class LoadService extends Service implements CallbackLoading {
     @Override
     public void onSuccess(List<OrganizationModel> _organizationModelList) {
         ContentValues[]contentValues = new ContentValues[_organizationModelList.size()];
-        ContentValues[]contentValues2 = new ContentValues[_organizationModelList.size()];
         for (int i = 0; i < _organizationModelList.size(); i++) {
 
             contentValues[i] = new ContentValues();
-            contentValues2[i] = new ContentValues();
             contentValues[i].put(ConverterDBHelper.FIELD_ROW_ID, _organizationModelList.get(i).getId());
-            contentValues2[i].put(ConverterDBHelper.FIELD_ROW_ID, _organizationModelList.get(i).getId());
             contentValues[i].put(ConverterDBHelper.FIELD_TITLE, _organizationModelList.get(i).getTitle());
             contentValues[i].put(ConverterDBHelper.FIELD_REGION, _organizationModelList.get(i).getRegion());
             contentValues[i].put(ConverterDBHelper.FIELD_CITY, _organizationModelList.get(i).getCity());

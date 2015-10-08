@@ -97,8 +97,6 @@ public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<Organization
     private OrganizationModel getOrganization(JSONObject _jOrganization) {
         OrganizationModel org = new OrganizationModel();
         ArrayList<CurrencyModel> currencyList = new ArrayList<>();
-        CurrencyModel currency = new CurrencyModel();
-        AskBidModel askBid = new AskBidModel();
 
         try {
 
@@ -115,11 +113,13 @@ public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<Organization
             Iterator it = (jsonObject.keys());
             while (it.hasNext()) {
                 String n = (String) it.next();
+                CurrencyModel currency = new CurrencyModel();
+                AskBidModel askBid = new AskBidModel();
                 try {
                     currency.setName(n);
                     JSONObject jsonAskBid = jsonObject.getJSONObject(n);
-                    askBid.setAsk(jsonAskBid.getLong("ask"));
-                    askBid.setBid(jsonAskBid.getLong("bid"));
+                    askBid.setAsk(jsonAskBid.getDouble("ask"));
+                    askBid.setBid(jsonAskBid.getDouble("bid"));
                     currency.setCurrency(askBid);
                     currencyList.add(currency);
                 } catch (JSONException e) {

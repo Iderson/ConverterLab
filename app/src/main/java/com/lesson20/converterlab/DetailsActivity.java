@@ -130,46 +130,40 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         if (cursor != null) {
             cursor.moveToFirst();
             String id = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_ROW_ID));
-            if (id.equals(_id)) {
-                String title = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_TITLE));
-                String region = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_REGION));
-                String city = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_CITY));
-                String phone = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_PHONE));
-                String address = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_ADDRESS));
-                String link = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_LINK));
-                mOrganizationModel = new OrganizationModel(
-                        id,
-                        title,
-                        region,
-                        city,
-                        phone,
-                        address,
-                        link);
-                populateInfo();
-            }
+            String title = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_TITLE));
+            String region = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_REGION));
+            String city = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_CITY));
+            String phone = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_PHONE));
+            String address = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_ADDRESS));
+            String link = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_LINK));
+            mOrganizationModel = new OrganizationModel(
+                    id,
+                    title,
+                    region,
+                    city,
+                    phone,
+                    address,
+                    link);
+            populateInfo();
         }
 
         if (cursor2 != null) {
             cursor2.moveToFirst();
-            String id = "" + cursor2.getString(cursor2.getColumnIndex(ConverterDBHelper.FIELD_ROW_ID));
-            if (id.equals(_id)) {
-                ArrayList<CurrencyModel> currencyModels = new ArrayList<>();
+            ArrayList<CurrencyModel> currencyModels = new ArrayList<>();
 
+            for (int i = 0; i < cursor2.getColumnCount(); i++) {
                 CurrencyModel curr = new CurrencyModel();
-                for (int i = 0; i < cursor2.getColumnCount(); i++) {
-
-                    if(!cursor2.isNull(i) && cursor2.getColumnName(i).contains("_ASK")) {
-                        try {
-                            AskBidModel askBidModel = new AskBidModel();
-                            askBidModel.setAsk(Long.valueOf(cursor2.getString(i)));
-                            askBidModel.setBid(Long.valueOf(cursor2.getString(i + 1)));
-                            curr.setName(cursor2.getColumnName(i));
-                            curr.setCurrency(askBidModel);
-                            currencyModels.add(curr);
-                        }
-                        catch (Exception ex){
-                            ex.printStackTrace();
-                        }
+                if(!cursor2.isNull(i) && cursor2.getColumnName(i).contains("_ASK")) {
+                    try {
+                        AskBidModel askBidModel = new AskBidModel();
+                        askBidModel.setAsk(Double.valueOf(cursor2.getString(i)));
+                        askBidModel.setBid(Double.valueOf(cursor2.getString(i + 1)));
+                        curr.setName(cursor2.getColumnName(i));
+                        curr.setCurrency(askBidModel);
+                        currencyModels.add(curr);
+                    }
+                    catch (Exception ex){
+                        ex.printStackTrace();
                     }
                 }
 

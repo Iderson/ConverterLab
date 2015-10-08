@@ -53,11 +53,6 @@ public class ConverterContentProvider extends ContentProvider{
             rowID = mConverterDBHelper.insert(
                     ConverterDBHelper.CURRENCY_TABLE,
                     contentValues2);
-        /*containsKey(String.format("%s | %s", "_ASK", "_BID")))
-            rowID = mConverterDBHelper.insert(
-                    ConverterDBHelper.CURRENCY_TABLE,
-                    values);
-        else*/
             rowID2 = mConverterDBHelper.insert(contentValues);
         Uri _uri=null;
         if(rowID>0){

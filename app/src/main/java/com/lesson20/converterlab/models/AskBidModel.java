@@ -2,22 +2,22 @@ package com.lesson20.converterlab.models;
 
 
 public class AskBidModel {
-    private long ask;
-    private long bid;
+    private double ask;
+    private double bid;
 
-    public long getAsk() {
+    public double getAsk() {
         return ask;
     }
 
-    public void setAsk(long _ask) {
+    public void setAsk(double _ask) {
         ask = _ask;
     }
 
-    public long getBid() {
+    public double getBid() {
         return bid;
     }
 
-    public void setBid(long _bid) {
+    public void setBid(double _bid) {
         bid = _bid;
     }
 }
