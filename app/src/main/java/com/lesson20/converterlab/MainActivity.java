@@ -36,6 +36,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    public final static String TAG = "Logs";
+
     private List<OrganizationModel>     mBankList;
     private RecyclerView                mRvBanks;
     private Toolbar                     mToolbar;
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     void refreshItems() {
+        doBindService();
         getSupportLoaderManager().initLoader(0, null, this);
         onItemsLoadComplete();
     }
@@ -84,6 +87,7 @@ public class MainActivity extends AppCompatActivity
     void onItemsLoadComplete() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
+
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             mBoundService = ((LoadService.LocalBinder)service).getService();
@@ -100,10 +104,10 @@ public class MainActivity extends AppCompatActivity
     };
 
     void doBindService() {
-        Intent intent = new Intent(this, LoadService.class);
-        bindService(intent, mConnection, 0);
-        mIsBound = true;
-        startService(intent);
+            Intent intent = new Intent(this, LoadService.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+            mIsBound = true;
+            startService(intent);
     }
 
     void doUnbindService() {
@@ -214,5 +218,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        doUnbindService();
     }
 }

@@ -58,18 +58,7 @@ public class LoadService extends Service implements CallbackLoading {
                 contentValues[i].put(list.get(j).getName() + "_BID", list.get(j).getCurrency().getBid());
             }
 
-           /* ConverterDBHelper mConverterDBHelper = new ConverterDBHelper(getApplicationContext());
-            long rowID = mConverterDBHelper.insert(ConverterDBHelper.CURRENCY_TABLE, contentValues2[i]);
-            Uri _uri=null;
-            if(rowID>0){
-                _uri = ContentUris.withAppendedId(ConverterContentProvider.CONTENT_URI, rowID);
-            }else {
-                try {
-                    throw new SQLException("Failed to insert : " + _uri);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }*/
+
         }
 
         InsertTask insertTask = new InsertTask();
@@ -121,12 +110,14 @@ public class LoadService extends Service implements CallbackLoading {
         private void showNotification() {
             CharSequence text = getText(R.string.load_service_started);
             CharSequence textProgress = getText(R.string.load_service_progress);
+            Intent intent = new Intent(LoadService.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             PendingIntent contentIntent = PendingIntent.getActivity(LoadService.this, 0,
-                    new Intent(LoadService.this, MainActivity.class), 0);
+                    intent, 0);
 
             final Builder builder = new NotificationCompat.Builder(LoadService.this)
-                    .setSmallIcon(android.R.drawable.ic_dialog_info)
+                    .setSmallIcon(R.drawable.ic_account_balance_white_24dp)
                     .setContentTitle(textProgress)
                     .setTicker(text)
                     .setWhen(System.currentTimeMillis())

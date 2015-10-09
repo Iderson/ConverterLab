@@ -157,7 +157,8 @@ public class ConverterDBHelper extends SQLiteOpenHelper{
     }
 
     public long insert(ContentValues contentValues){
-        long rowID = mDB.insert(ORGANIZATION_TABLE, null, contentValues);
+        long rowID = mDB.insert(ORGANIZATION_TABLE, null, contentValues);   //todo: override if exist _id
+                                                                            //todo: new row if not exist (cuurency/less_more)
         return rowID;
     }
 
