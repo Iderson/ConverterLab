@@ -36,6 +36,7 @@ public class LoadService extends Service implements CallbackLoading {
     private static Timer timer = new Timer();
 
     private int NOTIFICATION = R.string.load_service_started;
+    private static boolean aIsStarted;
 
     @Override
     public void onSuccess(List<OrganizationModel> _organizationModelList) {
@@ -57,8 +58,6 @@ public class LoadService extends Service implements CallbackLoading {
                 contentValues[i].put(list.get(j).getName() + "_ASK", list.get(j).getCurrency().getAsk());
                 contentValues[i].put(list.get(j).getName() + "_BID", list.get(j).getCurrency().getBid());
             }
-
-
         }
 
         InsertTask insertTask = new InsertTask();
@@ -91,12 +90,14 @@ public class LoadService extends Service implements CallbackLoading {
     public void onCreate() {
         mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         startService();
-//        showNotification();
     }
 
     private void startService()
     {
-        timer.scheduleAtFixedRate(new mainTask(), 0, 30 * 60 * 1000);
+        if(!aIsStarted) {
+            aIsStarted = true;
+            timer.scheduleAtFixedRate(new mainTask(), 0, 30 * 60 * 1000);
+        }
     }
 
     private class mainTask extends TimerTask
@@ -167,6 +168,7 @@ public class LoadService extends Service implements CallbackLoading {
     @Override
     public void onDestroy() {
         mNM.cancel(NOTIFICATION);
+        aIsStarted = false;
 
         Toast.makeText(this, "Service stoped", Toast.LENGTH_SHORT).show();
     }

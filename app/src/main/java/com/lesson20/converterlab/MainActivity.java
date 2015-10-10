@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -54,8 +56,15 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         handleIntent(getIntent());
 
-        doBindService();
         initUI();
+    }
+
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        //should check null because in air plan mode it will be null
+        return (netInfo != null && netInfo.isConnected());
+
     }
 
     private void initUI() {
@@ -74,13 +83,13 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
+        if(isOnline(MainActivity.this))
+            doBindService();
         getSupportLoaderManager().initLoader(0, null, this);
     }
 
     void refreshItems() {
         doBindService();
-        getSupportLoaderManager().initLoader(0, null, this);
         onItemsLoadComplete();
     }
 
