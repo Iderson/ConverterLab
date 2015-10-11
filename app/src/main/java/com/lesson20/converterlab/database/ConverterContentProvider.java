@@ -41,10 +41,17 @@ public class ConverterContentProvider extends ContentProvider{
         Iterator it = values.keySet().iterator();
         while (it.hasNext()) {
             String n = (String) it.next();
-            if(n.contains("ASK"))
+            if(n.contains("ASK") || n.contains("BID")) {
+                if(mConverterDBHelper.isColumnExist(n) == -1) {
+                    try {
+                        mConverterDBHelper.addColumn(n);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
                 contentValues2.put(n, values.getAsString(n));
-            else if(n.contains("BID"))
-                contentValues2.put(n, values.getAsString(n));
+            }
             else
                 contentValues.put(n, values.getAsString(n));
 
