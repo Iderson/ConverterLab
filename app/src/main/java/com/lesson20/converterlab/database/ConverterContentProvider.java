@@ -41,7 +41,7 @@ public class ConverterContentProvider extends ContentProvider{
         Iterator it = values.keySet().iterator();
         while (it.hasNext()) {
             String n = (String) it.next();
-            if(n.contains("ASK") || n.contains("BID")) {
+            if(n.contains("ASK") || n.contains("BID") || n.contains("FULL")) {
                 if(mConverterDBHelper.isColumnExist(n) == -1) {
                     try {
                         mConverterDBHelper.addColumn(n);
@@ -56,7 +56,7 @@ public class ConverterContentProvider extends ContentProvider{
                 contentValues.put(n, values.getAsString(n));
 
         }
-        if(contentValues2.size()>0)
+        if(contentValues2.size()>1)
             rowID = mConverterDBHelper.insert(
                     ConverterDBHelper.CURRENCY_TABLE,
                     contentValues2);

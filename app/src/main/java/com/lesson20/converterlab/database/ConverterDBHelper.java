@@ -39,7 +39,7 @@ public class ConverterDBHelper extends SQLiteOpenHelper{
 
     private static final String CREATE_TABLE_CURR = "create table " +
             CURRENCY_TABLE + " ( " +
-            FIELD_ROW_ID + " text primary key; ) ";
+            FIELD_ROW_ID + " text primary key ) ";
 
 
     @Override

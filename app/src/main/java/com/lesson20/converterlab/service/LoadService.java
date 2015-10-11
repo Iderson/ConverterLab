@@ -57,6 +57,7 @@ public class LoadService extends Service implements CallbackLoading {
             for (int j = 0; j < list.size(); j++) {
                 contentValues[i].put(list.get(j).getName() + "_ASK", list.get(j).getCurrency().getAsk());
                 contentValues[i].put(list.get(j).getName() + "_BID", list.get(j).getCurrency().getBid());
+                contentValues[i].put(list.get(j).getName() + "_FULL", list.get(j).getFullName());
             }
         }
 

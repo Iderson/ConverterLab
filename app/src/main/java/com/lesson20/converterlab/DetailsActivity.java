@@ -156,9 +156,11 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
                 if(!cursor2.isNull(i) && cursor2.getColumnName(i).contains("_ASK")) {
                     try {
                         AskBidModel askBidModel = new AskBidModel();
+                        String name = cursor2.getColumnName(i).replace("_ASK", "");
+                        curr.setName(name);
                         askBidModel.setAsk(Double.valueOf(cursor2.getString(i)));
-                        askBidModel.setBid(Double.valueOf(cursor2.getString(i + 1)));
-                        curr.setName(cursor2.getColumnName(i));
+                        askBidModel.setBid(Double.valueOf(cursor2.getString(cursor2.getColumnIndex(curr.getName() + "_BID"))));
+                        curr.setFullName(cursor2.getString(cursor2.getColumnIndex(curr.getName() + "_FULL")));
                         curr.setCurrency(askBidModel);
                         currencyModels.add(curr);
                     }

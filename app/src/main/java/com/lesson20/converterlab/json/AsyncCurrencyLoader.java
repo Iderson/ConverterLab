@@ -117,6 +117,7 @@ public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<Organization
                 AskBidModel askBid = new AskBidModel();
                 try {
                     currency.setName(n);
+                    currency.setFullName(mJsonCurrencyId.get(n));
                     JSONObject jsonAskBid = jsonObject.getJSONObject(n);
                     askBid.setAsk(jsonAskBid.getDouble("ask"));
                     askBid.setBid(jsonAskBid.getDouble("bid"));

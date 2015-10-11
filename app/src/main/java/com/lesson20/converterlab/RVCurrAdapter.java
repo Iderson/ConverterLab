@@ -37,7 +37,7 @@ public class RVCurrAdapter extends RecyclerView.Adapter<RVCurrAdapter.ContactVie
     @Override
     public void onBindViewHolder(final ContactViewHolder personViewHolder, int i) {
 
-        String name = mCurrency.get(i).getName();
+        String name = mCurrency.get(i).getFullName();
         double ask = mCurrency.get(i).getCurrency().getAsk();
         double bid = mCurrency.get(i).getCurrency().getBid();
 
