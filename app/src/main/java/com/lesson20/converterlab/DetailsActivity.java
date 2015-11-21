@@ -18,14 +18,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.lesson20.converterlab.adapter.RVCurrAdapter;
 import com.lesson20.converterlab.database.ConverterDBHelper;
 import com.lesson20.converterlab.models.AskBidModel;
 import com.lesson20.converterlab.models.CurrencyModel;
 import com.lesson20.converterlab.models.OrganizationModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity implements View.OnClickListener {
     private Toolbar mToolbar;
@@ -72,9 +71,9 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         mTvLink                 = (TextView) findViewById(R.id.tvLink_AD);
 
         mRvCurrencies.setLayoutManager(llm);
-        ((FloatingActionButton) findViewById(R.id.fabMap_AD)).setOnClickListener(this);
-        ((FloatingActionButton) findViewById(R.id.fabLink_AD)).setOnClickListener(this);
-        ((FloatingActionButton) findViewById(R.id.fabPhone_AD)).setOnClickListener(this);
+        findViewById(R.id.fabMap_AD).setOnClickListener(this);
+        findViewById(R.id.fabLink_AD).setOnClickListener(this);
+        findViewById(R.id.fabPhone_AD).setOnClickListener(this);
         ((SwipeRefreshLayout) findViewById(R.id.swpRefreshLayout_AD)).setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override

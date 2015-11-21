@@ -5,13 +5,17 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -31,12 +35,11 @@ import java.util.TimerTask;
 
 public class LoadService extends Service implements CallbackLoading {
     private static final String TAG = "LoadService";
-    private NotificationManager mNM;
 
     private static Timer timer = new Timer();
-
-    private int NOTIFICATION = R.string.load_service_started;
     private static boolean aIsStarted;
+    private final IBinder mBinder = new LocalBinder();
+    private int NOTIFICATION = R.string.load_service_started;
 
     @Override
     public void onSuccess(List<OrganizationModel> _organizationModelList) {
@@ -63,6 +66,87 @@ public class LoadService extends Service implements CallbackLoading {
 
         InsertTask insertTask = new InsertTask();
         insertTask.execute(contentValues);
+        showNotification();
+    }
+
+    @Override
+    public void onFailure(String errorMessage) {
+
+    }
+
+    @Override
+    public void onCreate() {
+        startService();
+    }
+
+    private void startService()
+    {
+        if(!aIsStarted) {
+            aIsStarted = true;
+            timer.scheduleAtFixedRate(new mainTask(), 0, 30 * 60 * 1000);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void showNotification() {
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        CharSequence text = getText(R.string.load_service_started);
+        CharSequence textProgress = getText(R.string.load_service_progress);
+        Intent intent = new Intent(LoadService.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(LoadService.this, 0,
+                intent, 0);
+
+        final Builder builder = new NotificationCompat.Builder(LoadService.this)
+                .setSmallIcon(R.drawable.ic_push)
+                .setContentTitle(textProgress)
+                .setTicker(text)
+                .setContentText(text)
+                .setSound(alarmSound)
+                .setAutoCancel(true);
+
+        // Creates an Intent that shows the title and a description of the feed
+        Intent resultIntent = new Intent(LoadService.this, MainActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(LoadService.this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(resultPendingIntent);
+        final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//            mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        for (int incr = 0; incr <= 100; incr += 20) {
+            builder.setProgress(100, incr, false);
+            try {
+                // Sleep for 5 seconds
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Log.d(TAG, "sleep failure");
+            }
+        }
+        builder.setContentText("Download complete")
+                .setProgress(0, 0, false);
+        mNotificationManager.notify(NOTIFICATION, builder.build());
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i("LoadService", "Received start id " + startId + ": " + intent);
+        return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        Toast.makeText(this, "Currency Service stoped", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+//        return mbinder;
+        return null;
     }
 
     private class InsertTask extends AsyncTask<ContentValues, Void, Void> {
@@ -76,109 +160,19 @@ public class LoadService extends Service implements CallbackLoading {
         }
     }
 
-    @Override
-    public void onFailure(String errorMessage) {
-
-    }
-
     public class LocalBinder extends Binder {
         public LoadService getService() {
             return LoadService.this;
         }
     }
 
-    @Override
-    public void onCreate() {
-        mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        startService();
-    }
-
-    private void startService()
-    {
-        if(!aIsStarted) {
-            aIsStarted = true;
-            timer.scheduleAtFixedRate(new mainTask(), 0, 30 * 60 * 1000);
-        }
-    }
-
-    private class mainTask extends TimerTask
-    {
-        public void run()
-        {
-            showNotification();
+    private class mainTask extends TimerTask {
+        public void run() {
             new AsyncCurrencyLoader(LoadService.this, LoadService.this).execute();
         }
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-        private void showNotification() {
-            CharSequence text = getText(R.string.load_service_started);
-            CharSequence textProgress = getText(R.string.load_service_progress);
-            Intent intent = new Intent(LoadService.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            PendingIntent contentIntent = PendingIntent.getActivity(LoadService.this, 0,
-                    intent, 0);
-
-            final Builder builder = new NotificationCompat.Builder(LoadService.this)
-                    .setSmallIcon(R.drawable.ic_account_balance_white_24dp)
-                    .setContentTitle(textProgress)
-                    .setTicker(text)
-                    .setWhen(System.currentTimeMillis())
-                    .setContentText(text)
-                    .setContentIntent(contentIntent)
-                    .setAutoCancel(true);
 
 
-            new Thread(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            int incr;
-                            for (incr = 0; incr <= 100; incr+=20) {
-                                builder.setProgress(100, incr, false);
-                                mNM.notify(NOTIFICATION, builder.build());
-                                try {
-                                    // Sleep for 5 seconds
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    Log.d(TAG, "sleep failure");
-                                }
-                            }
-                            builder.setContentText("Download complete")
-                                    .setProgress(0,0,false);
-                            mNM.notify(NOTIFICATION, builder.build());
-                        }
-                    }
-            ).start();
-//            notification.ledARGB = 0xff0000ff;
-//            notification.ledOnMS = 1000;
-//            notification.ledOffMS = 1000;
-//            notification.flags = Notification.FLAG_SHOW_LIGHTS | Notification.FLAG_AUTO_CANCEL;
-//
-//            mNM.notify(NOTIFICATION, notification);
-        }
     }
-
-
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("LoadService", "Received start id " + startId + ": " + intent);
-        return START_NOT_STICKY;
-    }
-
-    @Override
-    public void onDestroy() {
-        mNM.cancel(NOTIFICATION);
-        aIsStarted = false;
-
-        Toast.makeText(this, "Service stoped", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return mBinder;
-    }
-    private final IBinder mBinder = new LocalBinder();
 
 }
 

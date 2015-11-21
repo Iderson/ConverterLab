@@ -1,17 +1,14 @@
 package com.lesson20.converterlab;
 
 import android.app.SearchManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -25,12 +22,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.lesson20.converterlab.adapter.RVOrgAdapter;
 import com.lesson20.converterlab.database.ConverterContentProvider;
 import com.lesson20.converterlab.database.ConverterDBHelper;
 import com.lesson20.converterlab.models.OrganizationModel;
+import com.lesson20.converterlab.service.Helper;
 import com.lesson20.converterlab.service.LoadService;
+import com.lesson20.converterlab.service.ServiceStarter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +47,8 @@ public class MainActivity extends AppCompatActivity
     private LoadService                 mBoundService;
     private SwipeRefreshLayout          mSwipeRefreshLayout;
     private String                      mQueryStr = "";
+    private RVOrgAdapter mRvAdapter = null;
+    private SharedPreferences mPrefs;
 
 
     @Override
@@ -58,45 +59,66 @@ public class MainActivity extends AppCompatActivity
 
         initUI();
     }
-
+/*
     public static boolean isOnline(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         //should check null because in air plan mode it will be null
         return (netInfo != null && netInfo.isConnected());
 
-    }
+    }*/
 
     private void initUI() {
+
+        Helper.admobLoader(this, getResources(), findViewById(R.id.adView));
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        LinearLayoutManager llm = new LinearLayoutManager(MainActivity.this);
-        mRvBanks = (RecyclerView) findViewById(R.id.rvBanks_AM);
-        mRvBanks.setLayoutManager(llm);
-        mRvBanks.setItemAnimator(new DefaultItemAnimator());
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swpRefreshLayout_AM);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshItems();
+                updateList();
             }
         });
 
-        if(isOnline(MainActivity.this))
-            doBindService();
-        getSupportLoaderManager().initLoader(0, null, this);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean firstStart = mPrefs.getBoolean("firstStart", true);
+
+        if (firstStart) {
+            final ServiceStarter alarm = new ServiceStarter();
+            SharedPreferences.Editor editor = mPrefs.edit();
+
+            alarm.setAlarm(this);
+            editor.putBoolean("firstStart", false);
+            // commits your edits
+            editor.commit();
+        }
+
+        //get data from server and donload from database
+        downloadData();
     }
 
-    void refreshItems() {
-        doBindService();
-        onItemsLoadComplete();
+    private void updateList() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        downloadData();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
     }
-
-    void onItemsLoadComplete() {
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
-
+/*
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             mBoundService = ((LoadService.LocalBinder)service).getService();
@@ -110,29 +132,40 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(MainActivity.this, R.string.load_service_disconnected,
                     Toast.LENGTH_SHORT).show();
         }
-    };
+    };*/
 
-    void doBindService() {
-            Intent intent = new Intent(this, LoadService.class);
-            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-            mIsBound = true;
-            startService(intent);
+    void downloadData() {
+        Intent intent = new Intent(this, LoadService.class);
+//            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+//            mIsBound = true;
+        startService(intent);
+
+        getSupportLoaderManager().initLoader(0, null, this);
     }
 
-    void doUnbindService() {
+    /*void doUnbindService() {
         if (mIsBound) {
             // Detach our existing connection.
             unbindService(mConnection);
             mIsBound = false;
         }
     }
-
-
+*/
     private void populateRV(List<OrganizationModel> _list) {
-        RVOrgAdapter adapter = new RVOrgAdapter(MainActivity.this, _list);
-        mRvBanks.setAdapter(adapter);
+        if (mRvAdapter != null) mRvAdapter.notifyDataSetChanged();
+        else {
+            LinearLayoutManager llm = new LinearLayoutManager(MainActivity.this);
+            mRvBanks = (RecyclerView) findViewById(R.id.rvBanks_AM);
+            mRvBanks.setLayoutManager(llm);
+            mRvBanks.setItemAnimator(new DefaultItemAnimator());
+        }
+        mRvAdapter = new RVOrgAdapter(MainActivity.this, _list);
+        mRvBanks.setAdapter(mRvAdapter);
     }
 
+    /*
+    * Prepare and handle search operation
+    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -169,12 +202,18 @@ public class MainActivity extends AppCompatActivity
         return super.onPrepareOptionsMenu(menu);
     }
 
+    /*
+    * Prepere handling database operation
+    */
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Uri uri = ConverterContentProvider.CONTENT_URI;
         return new CursorLoader(this, uri, null, null, null, null);
     }
 
+    /*
+    * Database listener to populate currency list
+    */
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         String id = "";
@@ -227,12 +266,5 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        doUnbindService();
     }
 }

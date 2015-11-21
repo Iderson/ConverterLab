@@ -1,4 +1,4 @@
-package com.lesson20.converterlab;
+package com.lesson20.converterlab.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lesson20.converterlab.DetailsActivity;
+import com.lesson20.converterlab.R;
 import com.lesson20.converterlab.models.OrganizationModel;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public class RVOrgAdapter extends RecyclerView.Adapter<RVOrgAdapter.ContactViewH
     private List<OrganizationModel> mOrgList;
     private Activity                mActivity;
 
-    RVOrgAdapter(Activity activity, List<OrganizationModel> _orgList){
+    public RVOrgAdapter(Activity activity, List<OrganizationModel> _orgList) {
         mOrgList = _orgList;
         this.mActivity = activity;
     }

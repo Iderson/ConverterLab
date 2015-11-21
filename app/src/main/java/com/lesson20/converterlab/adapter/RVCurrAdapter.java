@@ -1,4 +1,4 @@
-package com.lesson20.converterlab;
+package com.lesson20.converterlab.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.CardView;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lesson20.converterlab.R;
 import com.lesson20.converterlab.models.CurrencyModel;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class RVCurrAdapter extends RecyclerView.Adapter<RVCurrAdapter.ContactVie
     private ArrayList<CurrencyModel> mCurrency;
     private Activity         mActivity;
 
-    RVCurrAdapter(Activity activity, ArrayList<CurrencyModel> _currency){
+    public RVCurrAdapter(Activity activity, ArrayList<CurrencyModel> _currency) {
         mCurrency = _currency;
         this.mActivity = activity;
     }
