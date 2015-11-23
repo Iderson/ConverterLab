@@ -23,32 +23,19 @@ public class Helper {
 
     private static boolean DISPLAY_DEBUG = true;
 
-    public static void noConnection(final Context context, boolean calledFromFragment, String message) {
+    public static void noConnection(final Context context) {
 
         AlertDialog.Builder ab = null;
         ab = new AlertDialog.Builder(context);
 
-        if (isOnline(context, false, false)) {
-            String messageText = "";
-            if (message != null && DISPLAY_DEBUG) {
-                messageText = "\n\n" + message;
-            }
-
-            ab.setMessage(context.getResources().getString(R.string.dialog_connection_description) + messageText);
-            ab.setPositiveButton(context.getResources().getString(R.string.ok), null);
-            ab.setTitle(context.getResources().getString(R.string.dialog_connection_title));
-        } else {
             ab.setMessage(context.getResources().getString(R.string.dialog_internet_description));
             ab.setPositiveButton(context.getResources().getString(R.string.ok), null);
             ab.setTitle(context.getResources().getString(R.string.dialog_internet_title));
-        }
+
 
         ab.show();
     }
 
-    public static void noConnection(final Context context, boolean calledFromFragment) {
-        noConnection(context, calledFromFragment, null);
-    }
 
     public static boolean isOnline(Context c, boolean calledFromFragment, boolean showDialog) {
         ConnectivityManager cm = (ConnectivityManager)
@@ -58,7 +45,7 @@ public class Helper {
         if (ni != null && ni.isConnected())
             return true;
         else if (showDialog) {
-            noConnection(c, calledFromFragment);
+            noConnection(c);
         }
         return false;
     }

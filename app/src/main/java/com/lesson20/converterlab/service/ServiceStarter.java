@@ -113,8 +113,6 @@ public class ServiceStarter extends BroadcastReceiver {
         editor.apply();
 
         Log.v("INFO", "Push Notifications Disabled");
-
-
     }
     // END_INCLUDE(cancel_alarm)
 }

@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     private String                      mQueryStr = "";
     private RVOrgAdapter mRvAdapter = null;
     private SharedPreferences mPrefs;
+    private ServiceStarter mAlarm = null;
 
 
     @Override
@@ -86,17 +87,17 @@ public class MainActivity extends AppCompatActivity
         boolean firstStart = mPrefs.getBoolean("firstStart", true);
 
         if (firstStart) {
-            final ServiceStarter alarm = new ServiceStarter();
+            mAlarm = new ServiceStarter();
             SharedPreferences.Editor editor = mPrefs.edit();
 
-            alarm.setAlarm(this);
+            mAlarm.setAlarm(this);
             editor.putBoolean("firstStart", false);
             // commits your edits
             editor.commit();
         }
 
-        //get data from server and donload from database
-        downloadData();
+        //get data from database
+        getSupportLoaderManager().initLoader(0, null, this);
     }
 
     private void updateList() {
@@ -111,46 +112,18 @@ public class MainActivity extends AppCompatActivity
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        downloadData();
+                        if(Helper.isOnline(MainActivity.this, false, true)) {
+                            Intent intent = new Intent(MainActivity.this, LoadService.class);
+                            startService(intent);
+                        }
+//                        initUI();
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
             }
         }).start();
     }
-/*
-    private ServiceConnection mConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            mBoundService = ((LoadService.LocalBinder)service).getService();
 
-            Toast.makeText(MainActivity.this, R.string.load_service_started,
-                    Toast.LENGTH_SHORT).show();
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            mBoundService = null;
-            Toast.makeText(MainActivity.this, R.string.load_service_disconnected,
-                    Toast.LENGTH_SHORT).show();
-        }
-    };*/
-
-    void downloadData() {
-        Intent intent = new Intent(this, LoadService.class);
-//            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-//            mIsBound = true;
-        startService(intent);
-
-        getSupportLoaderManager().initLoader(0, null, this);
-    }
-
-    /*void doUnbindService() {
-        if (mIsBound) {
-            // Detach our existing connection.
-            unbindService(mConnection);
-            mIsBound = false;
-        }
-    }
-*/
     private void populateRV(List<OrganizationModel> _list) {
         if (mRvAdapter != null) mRvAdapter.notifyDataSetChanged();
         else {
@@ -266,5 +239,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mAlarm.cancelAlarm(this);
     }
 }

@@ -1,21 +1,18 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/llRoot_AM"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/btnGray"
-        android:visibility="gone"
-        app:adSize="SMART_BANNER"
-        app:adUnitId="@string/ad_id"/>
+        android:orientation="vertical"
+        tools:context=".MainActivity"
+        android:layout_above="@+id/adView">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -37,4 +34,17 @@
             android:layout_height="match_parent"
             />
     </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/btnGray"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="@string/ad_id"/>
+
+
+</RelativeLayout>
