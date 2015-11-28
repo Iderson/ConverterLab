@@ -10,9 +10,9 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.TaskStackBuilder;
@@ -35,11 +35,16 @@ import java.util.TimerTask;
 
 public class LoadService extends Service implements CallbackLoading {
     private static final String TAG = "LoadService";
+    public static final String ACTION_MYINTENTSERVICE = "com.lesson20.converterlab.RESPONSE";
 
     private static Timer timer = new Timer();
     private static boolean aIsStarted;
-    private final IBinder mBinder = new LocalBinder();
     private int NOTIFICATION = R.string.load_service_started;
+
+
+    public LoadService() {
+        super();
+    }
 
     @Override
     public void onSuccess(List<OrganizationModel> _organizationModelList) {
@@ -66,6 +71,9 @@ public class LoadService extends Service implements CallbackLoading {
 
         InsertTask insertTask = new InsertTask();
         insertTask.execute(contentValues);
+
+        Intent intentResponse = new Intent(LoadService.this, LoadCompleteReceiver.class);
+        sendBroadcast(intentResponse);
         showNotification();
     }
 
@@ -95,15 +103,15 @@ public class LoadService extends Service implements CallbackLoading {
         Intent intent = new Intent(LoadService.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(LoadService.this, 0,
-                intent, 0);
+//        PendingIntent contentIntent = PendingIntent.getActivity(LoadService.this, 0,
+//                intent, 0);
 
         final Builder builder = new NotificationCompat.Builder(LoadService.this)
                 .setSmallIcon(R.drawable.ic_push)
                 .setContentTitle(textProgress)
                 .setTicker(text)
                 .setContentText(text)
-                .setSound(alarmSound)
+//                .setSound(alarmSound)
                 .setAutoCancel(true);
 
         // Creates an Intent that shows the title and a description of the feed
@@ -116,7 +124,6 @@ public class LoadService extends Service implements CallbackLoading {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultPendingIntent);
         final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//            mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
         for (int incr = 0; incr <= 100; incr += 20) {
             builder.setProgress(100, incr, false);
             try {
@@ -143,9 +150,9 @@ public class LoadService extends Service implements CallbackLoading {
         super.onDestroy();
     }
 
+    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-//        return mbinder;
         return null;
     }
 
@@ -157,12 +164,6 @@ public class LoadService extends Service implements CallbackLoading {
             }
 
             return null;
-        }
-    }
-
-    public class LocalBinder extends Binder {
-        public LoadService getService() {
-            return LoadService.this;
         }
     }
 

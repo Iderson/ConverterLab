@@ -5,6 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.lesson20.converterlab.MainActivity;
+
+import java.sql.SQLException;
 
 public class ConverterDBHelper extends SQLiteOpenHelper{
 
@@ -46,6 +51,7 @@ public class ConverterDBHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_INFO);
         db.execSQL(CREATE_TABLE_CURR);
+        Log.d(MainActivity.TAG, db.getPath());
     }
 
     public long insert(ContentValues contentValues){
@@ -82,10 +88,13 @@ public class ConverterDBHelper extends SQLiteOpenHelper{
     }
 
     public void addColumn(String _column){
-        mDB.execSQL("ALTER TABLE " + CURRENCY_TABLE
-                + " ADD COLUMN " + _column
-                + " TEXT;");
+        if(!isColumnExist(_column))
+            mDB.execSQL("ALTER TABLE " + CURRENCY_TABLE
+                    + " ADD COLUMN " + _column
+                    + " TEXT;");
     }
+
+
 
     public Cursor getCurrency(String _id) {
         String selection = ConverterDBHelper.FIELD_ROW_ID + "=?";
@@ -97,12 +106,26 @@ public class ConverterDBHelper extends SQLiteOpenHelper{
                 null, null, null);
     }
 
-    public int isColumnExist(String _column){
-        Cursor cursor = mDB.query(CURRENCY_TABLE,
-                null, null, null, null, null, null);
-        int ind = cursor.getColumnIndex(_column);
-        cursor.close();
-        return ind;
+    public boolean isColumnExist(String _column){
+        int count = -1;
+        Cursor c = null;
+        try {
+            String query = "SELECT " + _column +" FROM " + CURRENCY_TABLE + " ;";
+            c = mDB.rawQuery("pragma table_info ( " + CURRENCY_TABLE + " )", null);
+            while (c.moveToNext()) {
+                if(c.getString(1).equals(_column))
+                    count = 1;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+        return count > 0;
     }
 
     public Cursor getOrganizationDetail(String _id) {

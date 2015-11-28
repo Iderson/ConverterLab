@@ -23,8 +23,8 @@ import java.util.Map;
 
 public class AsyncCurrencyLoader extends AsyncTask<Void, Void, List<OrganizationModel>> {
 
-    private CallbackLoading mCallbackLoading;
-    private Context mContext;
+    private CallbackLoading     mCallbackLoading;
+    private Context             mContext;
     private Map<String, String> mJsonCityId;
     private Map<String, String> mJsonRegionId;
     private Map<String, String> mJsonCurrencyId;

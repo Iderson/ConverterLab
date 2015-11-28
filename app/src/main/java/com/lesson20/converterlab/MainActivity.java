@@ -3,6 +3,7 @@ package com.lesson20.converterlab;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -28,6 +29,7 @@ import com.lesson20.converterlab.database.ConverterContentProvider;
 import com.lesson20.converterlab.database.ConverterDBHelper;
 import com.lesson20.converterlab.models.OrganizationModel;
 import com.lesson20.converterlab.service.Helper;
+import com.lesson20.converterlab.service.LoadCompleteReceiver;
 import com.lesson20.converterlab.service.LoadService;
 import com.lesson20.converterlab.service.ServiceStarter;
 
@@ -38,18 +40,18 @@ public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public final static String TAG = "Logs";
+    private LoadCompleteReceiver myBroadcastReceiver;
+
 
     private List<OrganizationModel>     mBankList;
     private RecyclerView                mRvBanks;
     private Toolbar                     mToolbar;
 
-    private boolean                     mIsBound = false;
-    private LoadService                 mBoundService;
     private SwipeRefreshLayout          mSwipeRefreshLayout;
     private String                      mQueryStr = "";
-    private RVOrgAdapter mRvAdapter = null;
-    private SharedPreferences mPrefs;
-    private ServiceStarter mAlarm = null;
+    private RVOrgAdapter                mRvAdapter = null;
+    private SharedPreferences           mPrefs;
+    private ServiceStarter              mAlarm = null;
 
 
     @Override
@@ -60,14 +62,6 @@ public class MainActivity extends AppCompatActivity
 
         initUI();
     }
-/*
-    public static boolean isOnline(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        //should check null because in air plan mode it will be null
-        return (netInfo != null && netInfo.isConnected());
-
-    }*/
 
     private void initUI() {
 
@@ -96,6 +90,13 @@ public class MainActivity extends AppCompatActivity
             editor.commit();
         }
 
+        myBroadcastReceiver = new LoadCompleteReceiver();
+
+        // register BroadcastReceiver
+        IntentFilter intentFilter = new IntentFilter(
+                LoadService.ACTION_MYINTENTSERVICE);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(myBroadcastReceiver, intentFilter);
         //get data from database
         getSupportLoaderManager().initLoader(0, null, this);
     }
@@ -244,7 +245,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        mAlarm.cancelAlarm(this);
+        if(mAlarm != null && mAlarm.isOrderedBroadcast())
+            mAlarm.cancelAlarm(this);
+        unregisterReceiver(myBroadcastReceiver);
     }
 }

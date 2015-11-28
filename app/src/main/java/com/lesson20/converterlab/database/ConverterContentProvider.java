@@ -38,21 +38,15 @@ public class ConverterContentProvider extends ContentProvider{
         ContentValues contentValues2 = new ContentValues();
         contentValues.put(ConverterDBHelper.FIELD_ROW_ID, (String) values.get(ConverterDBHelper.FIELD_ROW_ID));
         contentValues2.put(ConverterDBHelper.FIELD_ROW_ID, String.valueOf(values.get(ConverterDBHelper.FIELD_ROW_ID)));
-        Iterator it = values.keySet().iterator();
-        while (it.hasNext()) {
-            String n = (String) it.next();
-            if(n.contains("ASK") || n.contains("BID") || n.contains("FULL")) {
-                if(mConverterDBHelper.isColumnExist(n) == -1) {
-                    try {
-                        mConverterDBHelper.addColumn(n);
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
-                    }
+        for (String n : values.keySet()) {
+            if (n.contains("ASK") || n.contains("BID") || n.contains("FULL")) {
+                try {
+                    mConverterDBHelper.addColumn(n);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 contentValues2.put(n, values.getAsString(n));
-            }
-            else
+            } else
                 contentValues.put(n, values.getAsString(n));
 
         }

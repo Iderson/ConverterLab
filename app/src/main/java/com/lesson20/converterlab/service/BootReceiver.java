@@ -13,6 +13,5 @@ public class BootReceiver extends BroadcastReceiver {
             Toast.makeText(context, "Converter Service started", Toast.LENGTH_SHORT).show();
             alarm.setAlarm(context);
         }
-//            context.startService(new Intent(context, LoadService.class));
     }
 }
