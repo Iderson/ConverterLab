@@ -2,7 +2,7 @@
     <string name="app_name">Currency Converter</string>
 
     <string name="action_settings">Settings</string>
-    <string name="header_name">Название валюты</string>
+    <string name="header_name">Название /\n валюты</string>
     <string name="header_value">Покупка /\n Продажа</string>
     <string name="action_share">SHARE</string>
     <string name="action_bank_info">Bank info</string>

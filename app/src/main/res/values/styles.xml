@@ -25,6 +25,15 @@
 
     </style>
 
+    <style name="small_title_left">
+        <item name="android:textColor">@color/light_primary</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="small_title_right">
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_gravity">right</item>
@@ -66,6 +75,18 @@
 
     <style name="card_rounded">
         <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="card_header">
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+    </style>
+
+    <style name="card_bottom">
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
     </style>
 
     <dimen name="fab_compat_margin">16dp</dimen>
