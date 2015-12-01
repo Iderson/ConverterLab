@@ -25,6 +25,7 @@ import com.lesson20.converterlab.database.ConverterDBHelper;
 import com.lesson20.converterlab.models.AskBidModel;
 import com.lesson20.converterlab.models.CurrencyModel;
 import com.lesson20.converterlab.models.OrganizationModel;
+import com.lesson20.converterlab.service.Helper;
 
 import java.util.ArrayList;
 
@@ -65,6 +66,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initUI() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_AD);
+        Helper.admobLoader(this, getResources(), findViewById(R.id.adView));
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

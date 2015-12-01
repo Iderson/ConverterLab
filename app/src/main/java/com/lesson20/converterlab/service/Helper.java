@@ -28,9 +28,9 @@ public class Helper {
         AlertDialog.Builder ab = null;
         ab = new AlertDialog.Builder(context);
 
-            ab.setMessage(context.getResources().getString(R.string.dialog_internet_description));
-            ab.setPositiveButton(context.getResources().getString(R.string.ok), null);
-            ab.setTitle(context.getResources().getString(R.string.dialog_internet_title));
+        ab.setMessage(context.getResources().getString(R.string.dialog_internet_description));
+        ab.setPositiveButton(context.getResources().getString(R.string.ok), null);
+        ab.setTitle(context.getResources().getString(R.string.dialog_internet_title));
 
 
         ab.show();
@@ -61,24 +61,6 @@ public class Helper {
             adView.loadAd(adRequestBuilder.build());
         }
     }
-    /*
-    public static ImageLoader initializeImageLoader(Context c){
-    	ImageLoader imageLoader = ImageLoader.getInstance();
-    	if (!imageLoader.isInited()){
-    		//creating a configuration for imageloader
-    		DisplayImageOptions options = new DisplayImageOptions.Builder()
-    		.cacheInMemory(true)
-    		.cacheOnDisk(true)
-    		.build();
-
-    		//set the configuration for imageloader
-    		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(c)
-    		.defaultDisplayImageOptions(options)
-    		.build();
-    		imageLoader.init(config);
-    	}
-    	return imageLoader;
-    }*/
 
     @SuppressLint("NewApi")
     public static void revealView(View toBeRevealed, View frame) {

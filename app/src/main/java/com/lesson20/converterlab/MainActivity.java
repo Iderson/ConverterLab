@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -26,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.lesson20.converterlab.adapter.RVOrgAdapter;
 import com.lesson20.converterlab.database.ConverterContentProvider;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity
     private RVOrgAdapter                mRvAdapter = null;
     private SharedPreferences           mPrefs;
     private ServiceStarter              mAlarm = null;
+    private boolean                     doubleBackToExitPressedOnce = false;
 
 
     @Override
@@ -62,6 +65,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         handleIntent(getIntent());
+
+        if(getIntent().getExtras() != null && getIntent().getBooleanExtra("EXIT", true))
+            finish();
 
         initUI();
     }
@@ -249,10 +255,38 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            unregisterReceiver(myBroadcastReceiver);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("EXIT", true);
+            startActivity(intent);
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if(mAlarm != null && mAlarm.isOrderedBroadcast())
             mAlarm.cancelAlarm(this);
-        unregisterReceiver(myBroadcastReceiver);
+        try {
+            unregisterReceiver(myBroadcastReceiver);
+        } catch (IllegalArgumentException ie){
+            ie.printStackTrace();
+        }
     }
 }

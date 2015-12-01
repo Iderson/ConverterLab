@@ -115,50 +115,84 @@
                     </android.support.v4.widget.SwipeRefreshLayout>
                 </android.support.v7.widget.CardView>
             </LinearLayout>
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
+        <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/famMenu_AD"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/llMain_AD"
-            fab:fab_addButtonColorNormal="@color/green"
+            fab:menu_icon="@drawable/ic_menu_white_24dp"
+            fab:menu_fab_size="normal"
+            fab:menu_showShadow="true"
+            fab:menu_shadowColor="#66000000"
+            fab:menu_shadowRadius="4dp"
+            fab:menu_shadowXOffset="1dp"
+            fab:menu_shadowYOffset="3dp"
+            fab:menu_colorNormal="@color/green"
+            fab:menu_colorPressed="@color/green_pressed"
+            fab:menu_animationDelayPerItem="50"
+            fab:menu_labels_position="left"
+            fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+            fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+            style="@style/FabStyle"
+            android:layout_toRightOf="@+id/adView"
+            android:layout_toEndOf="@+id/adView">
+            <!--fab:fab_addButtonColorNormal="@color/green"
             fab:fab_addButtonColorPressed="@color/green_pressed"
             fab:fab_addButtonPlusIconColor="@color/white_pressed"
             fab:fab_labelStyle="@style/menu_labels_style"
             fab:fab_labelsPosition="left"
-            fab:fab_addButtonStrokeVisible="false"
-            style = "@style/FabStyle">
+            fab:fab_addButtonStrokeVisible="false"-->
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
+
+            <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/fabMap_AD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_icon="@drawable/ic_map"
                 fab:fab_size="mini"
+                android:src="@drawable/ic_location_on_black_24dp"
+                app:fab_colorNormal="@color/light_primary"
+                app:fab_colorPressed="@color/white"
+                app:fab_colorRipple="#99FFFFFF"
+                fab:fab_label="Карта"/>
+                <!--fab:fab_size="mini"
                 fab:fab_colorNormal="@color/light_primary"
                 fab:fab_title="Карта"
-                fab:fab_colorPressed="@color/white_pressed"/>
+                fab:fab_colorPressed="@color/white_pressed"-->
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
+            <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/fabLink_AD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_icon="@drawable/ic_link"
+                fab:fab_size="mini"
+                fab:fab_label="Сайт"
+                android:src="@drawable/ic_link_black_24dp"
+                app:fab_colorNormal="@color/light_primary"
+                app:fab_colorPressed="@color/white"
+                app:fab_colorRipple="#99FFFFFF"
+                />
+                <!--fab:fab_icon="@drawable/ic_link"
                 fab:fab_colorNormal="@color/light_primary"
                 fab:fab_size="mini"
                 fab:fab_title="Сайт"
-                fab:fab_colorPressed="@color/white_pressed"/>
+                fab:fab_colorPressed="@color/white_pressed"-->
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
+            <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/fabPhone_AD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_icon="@drawable/ic_phone"
+                fab:fab_size="mini"
+                fab:fab_label="Позвонить"
+                app:fab_colorNormal="@color/light_primary"
+                app:fab_colorPressed="@color/white"
+                app:fab_colorRipple="#99FFFFFF"
+                android:src="@drawable/ic_phone_black_24dp"/>
+                <!--fab:fab_icon="@drawable/ic_phone"
                 fab:fab_colorNormal="@color/light_primary"
                 fab:fab_size="mini"
                 fab:fab_title="Позвонить"
-                fab:fab_colorPressed="@color/white_pressed" />
+                fab:fab_colorPressed="@color/white_pressed"-->
 
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+        </com.github.clans.fab.FloatingActionMenu>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
