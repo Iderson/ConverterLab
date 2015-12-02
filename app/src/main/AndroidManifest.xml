@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.lesson20.converterlab"
+    package="com.iderson.currencyguide"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.iderson.currencyguide.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,12 +34,12 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".DetailsActivity"
+            android:name="com.iderson.currencyguide.DetailsActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName="com.iderson.currencyguide.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.lesson20.converterlab.MainActivity" />
+                android:value="com.iderson.currencyguide.MainActivity"/>
         </activity>
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
@@ -47,15 +47,15 @@
             android:theme="@android:style/Theme.Translucent"/>
 
         <service
-            android:name=".service.LoadService"
+            android:name="com.iderson.currencyguide.service.LoadService"
             android:enabled="true"
             android:permission="android.permission.INTERNET"/>
 
-        <receiver android:name=".service.ServiceStarter"/>
-        <receiver android:name=".service.LoadCompleteReceiver"/>
+        <receiver android:name="com.iderson.currencyguide.service.ServiceStarter"/>
+        <receiver android:name="com.iderson.currencyguide.service.LoadCompleteReceiver"/>
 
         <receiver
-            android:name=".service.BootReceiver"
+            android:name="com.iderson.currencyguide.service.BootReceiver"
             android:enabled="false"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
@@ -64,8 +64,8 @@
         </receiver>
 
         <provider
-            android:name=".database.ConverterContentProvider"
-            android:authorities="com.lesson20.converterlab.organiations"
+            android:name=".database.CurrencyContentProvider"
+            android:authorities="com.iderson.currencyguide.organiations"
             android:exported="false" />
 
         <meta-data

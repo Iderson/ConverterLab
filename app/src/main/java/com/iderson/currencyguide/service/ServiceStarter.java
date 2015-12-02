@@ -1,4 +1,4 @@
-package com.lesson20.converterlab.service;
+package com.iderson.currencyguide.service;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -11,7 +11,7 @@ import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.lesson20.converterlab.R;
+import com.iderson.currencyguide.R;
 
 /**
  * Notification Service Manager

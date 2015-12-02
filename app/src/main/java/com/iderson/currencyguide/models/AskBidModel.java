@@ -1,4 +1,4 @@
-package com.lesson20.converterlab.models;
+package com.iderson.currencyguide.models;
 
 
 public class AskBidModel {

@@ -1,4 +1,4 @@
-package com.lesson20.converterlab;
+package com.iderson.currencyguide;
 
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lesson20.converterlab.models.OrganizationModel;
+import com.iderson.currencyguide.models.OrganizationModel;
 
 import java.io.File;
 import java.io.FileOutputStream;

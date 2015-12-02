@@ -1,4 +1,4 @@
-package com.lesson20.converterlab.adapter;
+package com.iderson.currencyguide.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.CardView;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lesson20.converterlab.R;
-import com.lesson20.converterlab.models.CurrencyModel;
+import com.iderson.currencyguide.R;
+import com.iderson.currencyguide.models.CurrencyModel;
 
 import java.util.ArrayList;
 

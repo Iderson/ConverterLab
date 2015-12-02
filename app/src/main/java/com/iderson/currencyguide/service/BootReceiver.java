@@ -1,4 +1,4 @@
-package com.lesson20.converterlab.service;
+package com.iderson.currencyguide.service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

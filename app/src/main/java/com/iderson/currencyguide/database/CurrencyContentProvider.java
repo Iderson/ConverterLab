@@ -1,4 +1,4 @@
-package com.lesson20.converterlab.database;
+package com.iderson.currencyguide.database;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -8,11 +8,10 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import java.sql.SQLException;
-import java.util.Iterator;
 
-public class ConverterContentProvider extends ContentProvider{
+public class CurrencyContentProvider extends ContentProvider {
 
-    public static final String PROVIDER_NAME = "com.lesson20.converterlab.organiations";
+    public static final String PROVIDER_NAME = "com.iderson.currencyguide.organiations";
     public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME + "/organiations" );
     private static final int CONVERTER = 1;
     private static final UriMatcher uriMatcher ;
@@ -22,11 +21,11 @@ public class ConverterContentProvider extends ContentProvider{
         uriMatcher.addURI(PROVIDER_NAME, "organiations", CONVERTER);
     }
 
-    ConverterDBHelper mConverterDBHelper;
+    CurrencyDBHelper mCurrencyDBHelper;
 
     @Override
     public boolean onCreate() {
-        mConverterDBHelper = new ConverterDBHelper (getContext());
+        mCurrencyDBHelper = new CurrencyDBHelper(getContext());
         return true;
     }
 
@@ -36,12 +35,12 @@ public class ConverterContentProvider extends ContentProvider{
         long rowID2 = 0;
         ContentValues contentValues = new ContentValues();
         ContentValues contentValues2 = new ContentValues();
-        contentValues.put(ConverterDBHelper.FIELD_ROW_ID, (String) values.get(ConverterDBHelper.FIELD_ROW_ID));
-        contentValues2.put(ConverterDBHelper.FIELD_ROW_ID, String.valueOf(values.get(ConverterDBHelper.FIELD_ROW_ID)));
+        contentValues.put(CurrencyDBHelper.FIELD_ROW_ID, (String) values.get(CurrencyDBHelper.FIELD_ROW_ID));
+        contentValues2.put(CurrencyDBHelper.FIELD_ROW_ID, String.valueOf(values.get(CurrencyDBHelper.FIELD_ROW_ID)));
         for (String n : values.keySet()) {
             if (n.contains("ASK") || n.contains("BID") || n.contains("FULL")) {
                 try {
-                    mConverterDBHelper.addColumn(n);
+                    mCurrencyDBHelper.addColumn(n);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -51,10 +50,10 @@ public class ConverterContentProvider extends ContentProvider{
 
         }
         if(contentValues2.size()>1)
-            rowID = mConverterDBHelper.insert(
-                    ConverterDBHelper.CURRENCY_TABLE,
+            rowID = mCurrencyDBHelper.insert(
+                    CurrencyDBHelper.CURRENCY_TABLE,
                     contentValues2);
-            rowID2 = mConverterDBHelper.insert(contentValues);
+        rowID2 = mCurrencyDBHelper.insert(contentValues);
         Uri _uri=null;
         if(rowID>0){
             _uri = ContentUris.withAppendedId(CONTENT_URI, rowID);
@@ -86,7 +85,7 @@ public class ConverterContentProvider extends ContentProvider{
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         int cnt = 0;
-        cnt = mConverterDBHelper.del();
+        cnt = mCurrencyDBHelper.del();
         return cnt;
     }
 
@@ -94,7 +93,7 @@ public class ConverterContentProvider extends ContentProvider{
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
         if(uriMatcher.match(uri)== CONVERTER){
-            return mConverterDBHelper.getOrganizations();
+            return mCurrencyDBHelper.getOrganizations();
         }
         return null;
     }

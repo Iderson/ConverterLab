@@ -1,4 +1,4 @@
-package com.lesson20.converterlab.database;
+package com.iderson.currencyguide.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,14 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.lesson20.converterlab.MainActivity;
+import com.iderson.currencyguide.MainActivity;
 
-import java.sql.SQLException;
+public class CurrencyDBHelper extends SQLiteOpenHelper {
 
-public class ConverterDBHelper extends SQLiteOpenHelper{
-
-    private static String DBNAME = "convertersqlite.db";
-    private static final   int VERSION = 1;
     public static final String FIELD_ROW_ID = "_id";
     public static final String FIELD_TITLE = "title";
     public static final String FIELD_REGION = "region";
@@ -22,16 +18,9 @@ public class ConverterDBHelper extends SQLiteOpenHelper{
     public static final String FIELD_PHONE = "phone";
     public static final String FIELD_ADDRESS = "address";
     public static final String FIELD_LINK = "link";
-
     public static final String ORGANIZATION_TABLE = "organizations";
     public static final String CURRENCY_TABLE = "currencies";
-    private SQLiteDatabase     mDB;
-
-    public ConverterDBHelper(Context context) {
-        super(context, DBNAME, null, VERSION);
-        this.mDB = getWritableDatabase();
-    }
-
+    private static final int VERSION = 1;
     private static final String CREATE_TABLE_INFO = "create table " +
             ORGANIZATION_TABLE + " ( " +
             FIELD_ROW_ID + " text primary key , " +
@@ -41,11 +30,16 @@ public class ConverterDBHelper extends SQLiteOpenHelper{
             FIELD_PHONE + " text , " +
             FIELD_ADDRESS + " text , " +
             FIELD_LINK + " text " + " ) ";
-
     private static final String CREATE_TABLE_CURR = "create table " +
             CURRENCY_TABLE + " ( " +
             FIELD_ROW_ID + " text primary key ) ";
+    private static String DBNAME = "currencysqlite.db";
+    private SQLiteDatabase mDB;
 
+    public CurrencyDBHelper(Context context) {
+        super(context, DBNAME, null, VERSION);
+        this.mDB = getWritableDatabase();
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -97,7 +91,7 @@ public class ConverterDBHelper extends SQLiteOpenHelper{
 
 
     public Cursor getCurrency(String _id) {
-        String selection = ConverterDBHelper.FIELD_ROW_ID + "=?";
+        String selection = CurrencyDBHelper.FIELD_ROW_ID + "=?";
         String[] selectionArgs = { _id };
         return mDB.query(CURRENCY_TABLE,
                 null,
@@ -129,7 +123,7 @@ public class ConverterDBHelper extends SQLiteOpenHelper{
     }
 
     public Cursor getOrganizationDetail(String _id) {
-        String selection = ConverterDBHelper.FIELD_ROW_ID + "=?";
+        String selection = CurrencyDBHelper.FIELD_ROW_ID + "=?";
         String[] selectionArgs = { _id };
         return mDB.query(ORGANIZATION_TABLE,
                 null,

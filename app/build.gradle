@@ -6,7 +6,7 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        applicationId "com.lesson20.converterlab"
+        applicationId "com.iderson.currencyguideb"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

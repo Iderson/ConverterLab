@@ -1,6 +1,6 @@
-package com.lesson20.converterlab.json;
+package com.iderson.currencyguide.json;
 
-import com.lesson20.converterlab.models.OrganizationModel;
+import com.iderson.currencyguide.models.OrganizationModel;
 
 import java.util.List;
 

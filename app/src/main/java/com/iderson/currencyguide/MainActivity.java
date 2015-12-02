@@ -1,4 +1,4 @@
-package com.lesson20.converterlab;
+package com.iderson.currencyguide;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -29,14 +28,14 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.lesson20.converterlab.adapter.RVOrgAdapter;
-import com.lesson20.converterlab.database.ConverterContentProvider;
-import com.lesson20.converterlab.database.ConverterDBHelper;
-import com.lesson20.converterlab.models.OrganizationModel;
-import com.lesson20.converterlab.service.Helper;
-import com.lesson20.converterlab.service.LoadCompleteReceiver;
-import com.lesson20.converterlab.service.LoadService;
-import com.lesson20.converterlab.service.ServiceStarter;
+import com.iderson.currencyguide.adapter.RVOrgAdapter;
+import com.iderson.currencyguide.database.CurrencyContentProvider;
+import com.iderson.currencyguide.database.CurrencyDBHelper;
+import com.iderson.currencyguide.models.OrganizationModel;
+import com.iderson.currencyguide.service.Helper;
+import com.iderson.currencyguide.service.LoadCompleteReceiver;
+import com.iderson.currencyguide.service.LoadService;
+import com.iderson.currencyguide.service.ServiceStarter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,7 +192,7 @@ public class MainActivity extends AppCompatActivity
     */
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Uri uri = ConverterContentProvider.CONTENT_URI;
+        Uri uri = CurrencyContentProvider.CONTENT_URI;
         return new CursorLoader(this, uri, null, null, null, null);
     }
 
@@ -218,13 +217,13 @@ public class MainActivity extends AppCompatActivity
             data.moveToFirst();
             mBankList = new ArrayList<>();
             for (int i = 0; i < count; i++) {
-                id = data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_ROW_ID));
-                title = data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_TITLE));
-                region = data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_REGION ));
-                city = data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_CITY ));
-                phone = data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_PHONE ));
-                address = data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_ADDRESS ));
-                link = "" + data.getString(data.getColumnIndex(ConverterDBHelper.FIELD_LINK));
+                id = data.getString(data.getColumnIndex(CurrencyDBHelper.FIELD_ROW_ID));
+                title = data.getString(data.getColumnIndex(CurrencyDBHelper.FIELD_TITLE));
+                region = data.getString(data.getColumnIndex(CurrencyDBHelper.FIELD_REGION));
+                city = data.getString(data.getColumnIndex(CurrencyDBHelper.FIELD_CITY));
+                phone = data.getString(data.getColumnIndex(CurrencyDBHelper.FIELD_PHONE));
+                address = data.getString(data.getColumnIndex(CurrencyDBHelper.FIELD_ADDRESS));
+                link = "" + data.getString(data.getColumnIndex(CurrencyDBHelper.FIELD_LINK));
                 if((!mQueryStr.equals("") &&
                         (title.toLowerCase().contains(mQueryStr.toLowerCase().trim()) ||
                                 city.toLowerCase().contains(mQueryStr.toLowerCase().trim()) ||

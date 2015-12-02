@@ -1,4 +1,4 @@
-package com.lesson20.converterlab.json;
+package com.iderson.currencyguide.json;
 
 import android.util.Log;
 

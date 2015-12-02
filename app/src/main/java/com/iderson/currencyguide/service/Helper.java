@@ -1,4 +1,4 @@
-package com.lesson20.converterlab.service;
+package com.iderson.currencyguide.service;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
@@ -14,7 +14,7 @@ import android.view.ViewAnimationUtils;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdRequest.Builder;
 import com.google.android.gms.ads.AdView;
-import com.lesson20.converterlab.R;
+import com.iderson.currencyguide.R;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

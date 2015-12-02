@@ -1,13 +1,12 @@
-package com.lesson20.converterlab.json;
+package com.iderson.currencyguide.json;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.lesson20.converterlab.MainActivity;
-import com.lesson20.converterlab.models.AskBidModel;
-import com.lesson20.converterlab.models.CurrencyModel;
-import com.lesson20.converterlab.models.OrganizationModel;
+import com.iderson.currencyguide.models.AskBidModel;
+import com.iderson.currencyguide.models.CurrencyModel;
+import com.iderson.currencyguide.models.OrganizationModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;

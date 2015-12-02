@@ -1,4 +1,4 @@
-package com.lesson20.converterlab.adapter;
+package com.iderson.currencyguide.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,9 +12,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lesson20.converterlab.DetailsActivity;
-import com.lesson20.converterlab.R;
-import com.lesson20.converterlab.models.OrganizationModel;
+import com.iderson.currencyguide.DetailsActivity;
+import com.iderson.currencyguide.R;
+import com.iderson.currencyguide.models.OrganizationModel;
 
 import java.util.List;
 

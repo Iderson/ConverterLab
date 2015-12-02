@@ -1,4 +1,4 @@
-package com.lesson20.converterlab;
+package com.iderson.currencyguide;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,12 +20,12 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lesson20.converterlab.adapter.RVCurrAdapter;
-import com.lesson20.converterlab.database.ConverterDBHelper;
-import com.lesson20.converterlab.models.AskBidModel;
-import com.lesson20.converterlab.models.CurrencyModel;
-import com.lesson20.converterlab.models.OrganizationModel;
-import com.lesson20.converterlab.service.Helper;
+import com.iderson.currencyguide.adapter.RVCurrAdapter;
+import com.iderson.currencyguide.database.CurrencyDBHelper;
+import com.iderson.currencyguide.models.AskBidModel;
+import com.iderson.currencyguide.models.CurrencyModel;
+import com.iderson.currencyguide.models.OrganizationModel;
+import com.iderson.currencyguide.service.Helper;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     private OrganizationModel   mOrganizationModel;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RVCurrAdapter mRvAdapter;
-    private ConverterDBHelper mDBOpenHelper;
+    private CurrencyDBHelper mDBOpenHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
         Intent intent = getIntent();
         mID = intent.getStringExtra("_id");
-        mDBOpenHelper = new ConverterDBHelper(this);
+        mDBOpenHelper = new CurrencyDBHelper(this);
         initUI();
         getFromDB();
 
@@ -197,13 +197,13 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
         if (cursor != null) {
             cursor.moveToFirst();
-            String id = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_ROW_ID));
-            String title = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_TITLE));
-            String region = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_REGION));
-            String city = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_CITY));
-            String phone = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_PHONE));
-            String address = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_ADDRESS));
-            String link = "" + cursor.getString(cursor.getColumnIndex(ConverterDBHelper.FIELD_LINK));
+            String id = "" + cursor.getString(cursor.getColumnIndex(CurrencyDBHelper.FIELD_ROW_ID));
+            String title = "" + cursor.getString(cursor.getColumnIndex(CurrencyDBHelper.FIELD_TITLE));
+            String region = "" + cursor.getString(cursor.getColumnIndex(CurrencyDBHelper.FIELD_REGION));
+            String city = "" + cursor.getString(cursor.getColumnIndex(CurrencyDBHelper.FIELD_CITY));
+            String phone = "" + cursor.getString(cursor.getColumnIndex(CurrencyDBHelper.FIELD_PHONE));
+            String address = "" + cursor.getString(cursor.getColumnIndex(CurrencyDBHelper.FIELD_ADDRESS));
+            String link = "" + cursor.getString(cursor.getColumnIndex(CurrencyDBHelper.FIELD_LINK));
             mOrganizationModel = new OrganizationModel(
                     id,
                     title,

@@ -1,4 +1,4 @@
-package com.lesson20.converterlab.models;
+package com.iderson.currencyguide.models;
 
 import java.util.ArrayList;
 
@@ -29,11 +29,11 @@ public class OrganizationModel {
         return currencies;
     }
 
-    public void setCurrencies(CurrencyModel _currencies) {
-    }
-
     public void setCurrencies(ArrayList<CurrencyModel> _currencies) {
         currencies = _currencies;
+    }
+
+    public void setCurrencies(CurrencyModel _currencies) {
     }
 
     public String getId() {

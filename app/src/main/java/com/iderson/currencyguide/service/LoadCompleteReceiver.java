@@ -1,13 +1,12 @@
-package com.lesson20.converterlab.service;
+package com.iderson.currencyguide.service;
 
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.lesson20.converterlab.MainActivity;
+import com.iderson.currencyguide.MainActivity;
 
 import java.util.List;
 

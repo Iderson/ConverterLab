@@ -1,4 +1,4 @@
-package com.lesson20.converterlab.service;
+package com.iderson.currencyguide.service;
 
 import android.annotation.TargetApi;
 import android.app.NotificationManager;
@@ -19,14 +19,14 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.lesson20.converterlab.MainActivity;
-import com.lesson20.converterlab.R;
-import com.lesson20.converterlab.database.ConverterContentProvider;
-import com.lesson20.converterlab.database.ConverterDBHelper;
-import com.lesson20.converterlab.json.AsyncCurrencyLoader;
-import com.lesson20.converterlab.json.CallbackLoading;
-import com.lesson20.converterlab.models.CurrencyModel;
-import com.lesson20.converterlab.models.OrganizationModel;
+import com.iderson.currencyguide.MainActivity;
+import com.iderson.currencyguide.R;
+import com.iderson.currencyguide.database.CurrencyContentProvider;
+import com.iderson.currencyguide.database.CurrencyDBHelper;
+import com.iderson.currencyguide.json.AsyncCurrencyLoader;
+import com.iderson.currencyguide.json.CallbackLoading;
+import com.iderson.currencyguide.models.CurrencyModel;
+import com.iderson.currencyguide.models.OrganizationModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +34,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class LoadService extends Service implements CallbackLoading {
+    public static final String ACTION_MYINTENTSERVICE = "com.iderson.currencyguide.RESPONSE";
     private static final String TAG = "LoadService";
-    public static final String ACTION_MYINTENTSERVICE = "com.lesson20.converterlab.RESPONSE";
-
     private static Timer timer = new Timer();
     private static boolean aIsStarted;
     private int NOTIFICATION = R.string.load_service_started;
@@ -52,13 +51,13 @@ public class LoadService extends Service implements CallbackLoading {
         for (int i = 0; i < _organizationModelList.size(); i++) {
 
             contentValues[i] = new ContentValues();
-            contentValues[i].put(ConverterDBHelper.FIELD_ROW_ID, _organizationModelList.get(i).getId());
-            contentValues[i].put(ConverterDBHelper.FIELD_TITLE, _organizationModelList.get(i).getTitle());
-            contentValues[i].put(ConverterDBHelper.FIELD_REGION, _organizationModelList.get(i).getRegion());
-            contentValues[i].put(ConverterDBHelper.FIELD_CITY, _organizationModelList.get(i).getCity());
-            contentValues[i].put(ConverterDBHelper.FIELD_PHONE, _organizationModelList.get(i).getPhone());
-            contentValues[i].put(ConverterDBHelper.FIELD_ADDRESS, _organizationModelList.get(i).getAddress());
-            contentValues[i].put(ConverterDBHelper.FIELD_LINK, _organizationModelList.get(i).getLink());
+            contentValues[i].put(CurrencyDBHelper.FIELD_ROW_ID, _organizationModelList.get(i).getId());
+            contentValues[i].put(CurrencyDBHelper.FIELD_TITLE, _organizationModelList.get(i).getTitle());
+            contentValues[i].put(CurrencyDBHelper.FIELD_REGION, _organizationModelList.get(i).getRegion());
+            contentValues[i].put(CurrencyDBHelper.FIELD_CITY, _organizationModelList.get(i).getCity());
+            contentValues[i].put(CurrencyDBHelper.FIELD_PHONE, _organizationModelList.get(i).getPhone());
+            contentValues[i].put(CurrencyDBHelper.FIELD_ADDRESS, _organizationModelList.get(i).getAddress());
+            contentValues[i].put(CurrencyDBHelper.FIELD_LINK, _organizationModelList.get(i).getLink());
 
 
             ArrayList<CurrencyModel> list = _organizationModelList.get(i).getCurrencies();
@@ -160,7 +159,7 @@ public class LoadService extends Service implements CallbackLoading {
         @Override
         protected Void doInBackground(ContentValues... contentValues) {
             for (ContentValues contentValue : contentValues) {
-                getContentResolver().insert(ConverterContentProvider.CONTENT_URI, contentValue);
+                getContentResolver().insert(CurrencyContentProvider.CONTENT_URI, contentValue);
             }
 
             return null;
