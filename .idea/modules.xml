@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ConverterLab.iml" filepath="$PROJECT_DIR$/ConverterLab.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CurrencyGuide.iml" filepath="$PROJECT_DIR$/CurrencyGuide.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/multiwindow-v1.2.6/multiwindow-v1.2.6.iml" filepath="$PROJECT_DIR$/multiwindow-v1.2.6/multiwindow-v1.2.6.iml" />
       <module fileurl="file://$PROJECT_DIR$/sdk-v1.0.0/sdk-v1.0.0.iml" filepath="$PROJECT_DIR$/sdk-v1.0.0/sdk-v1.0.0.iml" />

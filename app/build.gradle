@@ -22,7 +22,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/multiwindow-v1.2.6.jar')
     compile files('libs/sdk-v1.0.0.jar')
     compile 'com.google.android.gms:play-services:8.3.0'
     compile 'com.android.support:appcompat-v7:23.1.1'
@@ -30,6 +29,4 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.github.clans:fab:1.6.2'
-    compile project(':multiwindow-v1.2.6')
-    compile project(':sdk-v1.0.0')
 }

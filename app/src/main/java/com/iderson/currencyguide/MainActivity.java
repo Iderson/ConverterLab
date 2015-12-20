@@ -36,9 +36,6 @@ import com.iderson.currencyguide.service.Helper;
 import com.iderson.currencyguide.service.LoadCompleteReceiver;
 import com.iderson.currencyguide.service.LoadService;
 import com.iderson.currencyguide.service.ServiceStarter;
-import com.samsung.android.sdk.SsdkUnsupportedException;
-import com.samsung.android.sdk.multiwindow.SMultiWindow;
-import com.samsung.android.sdk.multiwindow.SMultiWindowActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +56,6 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences           mPrefs;
     private ServiceStarter              mAlarm = null;
     private boolean                     doubleBackToExitPressedOnce = false;
-    private SMultiWindow mMultiWindow = null;
-    private SMultiWindowActivity mMultiWindowActivity = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,18 +109,6 @@ public class MainActivity extends AppCompatActivity
         //get data from database
         getSupportLoaderManager().initLoader(0, null, this);
 
-        // create Creates list item's string. Each item is used for MultiWindow
-// test.
-        String[] mStrings = new String[]{"1. Multi Window",
-                "2. Normal Window"};
-
-        mMultiWindow = new SMultiWindow();
-        try {
-            mMultiWindow.initialize(this);
-        } catch (SsdkUnsupportedException e) {
-            e.printStackTrace();
-        }
-        mMultiWindowActivity = new SMultiWindowActivity(this);
     }
 
     private void updateList() {
