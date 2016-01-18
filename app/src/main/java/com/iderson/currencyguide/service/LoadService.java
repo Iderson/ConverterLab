@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutionException;
 
 public class LoadService extends Service implements CallbackLoading {
     public static final String ACTION_MYINTENTSERVICE = "com.iderson.currencyguide.RESPONSE";
@@ -70,6 +71,13 @@ public class LoadService extends Service implements CallbackLoading {
 
         InsertTask insertTask = new InsertTask();
         insertTask.execute(contentValues);
+        try {
+            insertTask.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         Intent intentResponse = new Intent(LoadService.this, LoadCompleteReceiver.class);
         sendBroadcast(intentResponse);

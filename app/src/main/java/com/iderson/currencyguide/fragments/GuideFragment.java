@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.iderson.currencyguide.MainActivity;
 import com.iderson.currencyguide.R;
@@ -58,7 +57,6 @@ public class GuideFragment extends Fragment implements LoaderManager.LoaderCallb
                 updateList();
             }
         });
-//get data from database
 
 
         Helper.admobLoader(mLayout.getContext(), getResources(), mLayout.findViewById(R.id.adView));
@@ -68,9 +66,9 @@ public class GuideFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         mActivity = getActivity();
+        mQueryStr = getArguments().getString(DATA);
+//get data from database
         mActivity.getSupportLoaderManager().initLoader(0, null, this);
-        String string = savedInstanceState.getString(DATA);
-        Toast.makeText(mActivity, string, Toast.LENGTH_SHORT).show();
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -87,7 +85,7 @@ public class GuideFragment extends Fragment implements LoaderManager.LoaderCallb
                     @Override
                     public void run() {
                         if (Helper.isOnline(mActivity, false, true)) {
-                            ((MainActivity) getActivity()).startFragment("query");
+                            ((MainActivity) getActivity()).startFragment(mQueryStr);
                         }
 //                        initUI();
                         mSwipeRefreshLayout.setRefreshing(false);

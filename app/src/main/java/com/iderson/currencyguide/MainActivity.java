@@ -57,20 +57,16 @@ public class MainActivity extends AppCompatActivity {
             finish();
 
         initUI();
-        startFragment("query");
+        startFragment("");
     }
 
     public void startFragment(String _query) {
         GuideFragment fragment;
         fragment = new GuideFragment();
-//            String extra;
-//            extra = item.getData();
-//            bundle.putString(DATA, extra);
         Bundle bundle = new Bundle();
         bundle.putString(DATA, _query);
+        fragment.setArguments(bundle);
 
-        if (_query != null)
-            fragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment).commit();
@@ -127,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();
-                startFragment("query");
+                startFragment(query);
                 return false;
             }
 
