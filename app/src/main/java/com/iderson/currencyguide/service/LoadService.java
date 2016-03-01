@@ -46,6 +46,8 @@ public class LoadService extends Service implements CallbackLoading {
         super();
     }
 
+
+
     @Override
     public void onSuccess(List<OrganizationModel> _organizationModelList) {
         ContentValues[]contentValues = new ContentValues[_organizationModelList.size()];
@@ -79,8 +81,11 @@ public class LoadService extends Service implements CallbackLoading {
             e.printStackTrace();
         }
 
-        Intent intentResponse = new Intent(LoadService.this, LoadCompleteReceiver.class);
+        Intent intentResponse = new Intent(MainActivity.BROADCAST_ACTION);
+        // notifies that task has started
+        intentResponse.putExtra(MainActivity.PARAM_STATUS, MainActivity.STATUS_START);
         sendBroadcast(intentResponse);
+
         showNotification();
     }
 
@@ -148,6 +153,7 @@ public class LoadService extends Service implements CallbackLoading {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("LoadService", "Received start id " + startId + ": " + intent);
+
         return START_STICKY;
     }
 

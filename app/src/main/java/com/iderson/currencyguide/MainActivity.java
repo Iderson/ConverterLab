@@ -1,6 +1,7 @@
 package com.iderson.currencyguide;
 
 import android.app.SearchManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -15,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
     public final static String TAG = "Logs";
     private static final int MENU_MULTI_WINDOW = 0;
     private static final int MENU_NORMAL_WINDOW = 1;
+    private static final String LOG_TAG = "MAIN_TAG";
+    public static final int STATUS_START = 200;
+    public static final int STATUS_FINISH = 300;
+    public static final int PENDING_DATA = 100;
+    public static final String PARAM_TASK = "pendingIntent";
+    public static String BROADCAST_ACTION = "com.iderson.currencyguide";
+
+    BroadcastReceiver br;
+
     private LoadCompleteReceiver myBroadcastReceiver;
     private List<OrganizationModel>     mBankList;
     private RecyclerView                mRvBanks;
@@ -43,9 +54,10 @@ public class MainActivity extends AppCompatActivity {
     private String                      mQueryStr = "";
     private RVOrgAdapter                mRvAdapter = null;
     private SharedPreferences           mPrefs;
-    private ServiceStarter              mAlarm = null;
+    private ServiceStarter mAlarm = null;
     private boolean                     doubleBackToExitPressedOnce = false;
     private String DATA = "SEARCH";
+    public static final String PARAM_STATUS = "status";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +69,33 @@ public class MainActivity extends AppCompatActivity {
             finish();
 
         initUI();
+        initBroadcast();
         startFragment("");
+    }
+
+    private void initBroadcast() {
+        br = new BroadcastReceiver() {
+            // действия при получении сообщений
+            public void onReceive(Context context, Intent intent) {
+                int task = intent.getIntExtra(PARAM_TASK, 0);
+                int status = intent.getIntExtra(PARAM_STATUS, 0);
+                Log.d(LOG_TAG, "onReceive: task = " + task + ", status = " + status);
+
+                // Catching broadcast : loading data from server has started
+                if (status == STATUS_START){
+                    Toast.makeText(MainActivity.this, "Loading data started", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(MainActivity.this, MainActivity.class));
+                }
+
+                if (status == STATUS_FINISH){
+                    Toast.makeText(MainActivity.this, "Loading data finished", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+        // создаем фильтр для BroadcastReceiver
+        IntentFilter intFilt = new IntentFilter(BROADCAST_ACTION);
+        // регистрируем (включаем) BroadcastReceiver
+        registerReceiver(br, intFilt);
     }
 
     public void startFragment(String _query) {
@@ -86,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         boolean firstStart = mPrefs.getBoolean("firstStart", true);
 
         if (firstStart) {
+
             mAlarm = new ServiceStarter();
             SharedPreferences.Editor editor = mPrefs.edit();
 
@@ -102,13 +141,11 @@ public class MainActivity extends AppCompatActivity {
                 LoadService.ACTION_MYINTENTSERVICE);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(myBroadcastReceiver, intentFilter);
-
-
     }
 
     /*
-    * Prepare and handle search operation
-    */
+        * Prepare and handle search operation
+        */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

@@ -1,5 +1,6 @@
 package com.iderson.currencyguide.service;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -18,10 +19,15 @@ import com.iderson.currencyguide.R;
  */
 public class ServiceStarter extends BroadcastReceiver {
     static String NOTIFY_ON = "notify_on";
+    private Activity activity = null;
     // The app's AlarmManager, which provides access to the system alarm services.
     private AlarmManager alarmMgr;
     // The pending intent that is triggered when the alarm fires.
     private PendingIntent alarmIntent;
+
+    public ServiceStarter() {
+    }
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -35,6 +41,7 @@ public class ServiceStarter extends BroadcastReceiver {
 
         if (Helper.isOnline(context, false, false) && prefson) {
             Intent service = new Intent(context, LoadService.class);
+
 
             // Start the service, keeping the device awake while it is launching.
             context.startService(service);

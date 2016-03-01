@@ -47,11 +47,11 @@
             android:theme="@android:style/Theme.Translucent"/>
 
         <service
-            android:name="com.iderson.currencyguide.service.LoadService"
+            android:name=".service.LoadService"
             android:enabled="true"
             android:permission="android.permission.INTERNET"/>
 
-        <receiver android:name="com.iderson.currencyguide.service.ServiceStarter"/>
+        <receiver android:name=".service.ServiceStarter"/>
         <receiver android:name="com.iderson.currencyguide.service.LoadCompleteReceiver"/>
 
         <receiver
