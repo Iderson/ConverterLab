@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iderson.currencyguide.adapter.RVCurrAdapter;
+import com.iderson.currencyguide.adapter.SimpleDividerItemDecoration;
 import com.iderson.currencyguide.database.CurrencyDBHelper;
 import com.iderson.currencyguide.models.AskBidModel;
 import com.iderson.currencyguide.models.CurrencyModel;
@@ -87,6 +88,9 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
         populateInfo();
         mRvCurrencies.setLayoutManager(llm);
+        mRvCurrencies.addItemDecoration(new SimpleDividerItemDecoration(
+                getApplicationContext()
+        ));
         findViewById(R.id.fabMap_AD).setOnClickListener(this);
         findViewById(R.id.fabLink_AD).setOnClickListener(this);
         findViewById(R.id.fabPhone_AD).setOnClickListener(this);

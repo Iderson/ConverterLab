@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 // Catching broadcast : loading data from server has started
                 if (status == STATUS_START){
                     Toast.makeText(MainActivity.this, "Loading data started", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(MainActivity.this, MainActivity.class));
+                    startActivity(new Intent(MainActivity.      this, MainActivity.class));
                 }
 
                 if (status == STATUS_FINISH){
