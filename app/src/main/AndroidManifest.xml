@@ -12,11 +12,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:screenOrientation="portrait">
+        android:theme="@style/AppTheme">
+
         <activity
             android:name="com.iderson.currencyguide.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -36,7 +38,9 @@
         <activity
             android:name="com.iderson.currencyguide.DetailsActivity"
             android:label="@string/app_name"
-            android:parentActivityName="com.iderson.currencyguide.MainActivity">
+            android:parentActivityName="com.iderson.currencyguide.MainActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.iderson.currencyguide.MainActivity"/>

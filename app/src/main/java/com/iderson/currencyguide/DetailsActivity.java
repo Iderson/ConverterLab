@@ -43,9 +43,10 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
     private TextView            mTvLink;
     private RecyclerView        mRvCurrencies;
     private OrganizationModel   mOrganizationModel;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RVCurrAdapter mRvAdapter;
-    private CurrencyDBHelper mDBOpenHelper;
+    private SwipeRefreshLayout  mSwipeRefreshLayout;
+    private RVCurrAdapter       mRvAdapter;
+    private CurrencyDBHelper    mDBOpenHelper;
+    private ShareDialog         mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = getIntent();
         mID = intent.getStringExtra("_id");
         mDBOpenHelper = new CurrencyDBHelper(this);
+        mDialog = new ShareDialog();
         initUI();
         getFromDB();
 
@@ -132,9 +134,8 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
                 return true;
             case R.id.action_share:
-                ShareDialog dialog = new ShareDialog();
-                dialog.setBankInfo(mOrganizationModel);
-                dialog.show(getFragmentManager(), "Edit Contact");
+                mDialog.setBankInfo(mOrganizationModel);
+                mDialog.show(getFragmentManager(), "Edit Contact");
 
                 return true;
         }
@@ -184,6 +185,7 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
 
                 populateRV(currencyModels);
+                mDialog.setCurrencyModels(currencyModels);
             }
             if(cursor != null) cursor.close();
 

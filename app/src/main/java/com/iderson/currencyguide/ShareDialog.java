@@ -19,15 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.iderson.currencyguide.models.CurrencyModel;
 import com.iderson.currencyguide.models.OrganizationModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ShareDialog extends DialogFragment implements View.OnClickListener {
-    private OrganizationModel   mBankInfo;
-    private ImageView           mIvBitmapInfo;
+    private OrganizationModel           mBankInfo;
+    private ArrayList<CurrencyModel>    currencyModels = new ArrayList<>();
+    private ImageView                   mIvBitmapInfo;
 
     @Nullable
     @Override
@@ -46,10 +49,19 @@ public class ShareDialog extends DialogFragment implements View.OnClickListener 
         ((TextView) imgView.findViewById(R.id.tvPhone_VI)).setText(mBankInfo.getPhone());
         ((TextView) imgView.findViewById(R.id.tvLink_VI)).setText(mBankInfo.getLink());
 
+        for (int item = 0; item < currencyModels.size(); item++) {
+            TextView textView = new TextView(getActivity());
+            textView.setText(String.format("%s %s\n%s",
+                    currencyModels.get(item).getFullName(), currencyModels.get(item).getCurrency().getAsk(),
+                    currencyModels.get(item).getCurrency().getBid()));
+            imgLayout.addView(textView);
+        }
+
         tvTitle.setText(mBankInfo.getTitle());
         int width   = imgLayout.getWidth();
         int height  = imgLayout.getHeight();
-        getDialog().getWindow().setLayout(width, height);
+        getDialog().getWindow().setLayout(width, height + 50);
+
         if(mBankInfo != null)
             loadImage(imgLayout);
 
@@ -102,7 +114,10 @@ public class ShareDialog extends DialogFragment implements View.OnClickListener 
 
     public void setBankInfo(OrganizationModel _bankInfo) {
         mBankInfo = _bankInfo;
+    }
 
+    public void setCurrencyModels(ArrayList<CurrencyModel> _currencyModels) {
+        currencyModels = _currencyModels;
     }
 
     public Bitmap viewToBitmap(View view) {
